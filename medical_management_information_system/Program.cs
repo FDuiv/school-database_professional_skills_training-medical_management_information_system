@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace medical_management_information_system
 {
+    
     static class Program
     {
+        static public User user = new User();
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -16,7 +17,10 @@ namespace medical_management_information_system
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new LoginForm());
+
+            
         }
+        
     }
 }
