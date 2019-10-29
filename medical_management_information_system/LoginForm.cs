@@ -44,8 +44,8 @@ namespace medical_management_information_system
             
             if (result=="Login successful")
             {
-                //进入主界面
-                this.Close();
+                //关闭登录窗口
+                this.Close();     
             }
         }
 
@@ -68,6 +68,27 @@ namespace medical_management_information_system
             {
                 Program.user.Connect(ConnectForm.ip, ConnectForm.port, ConnectForm.user, ConnectForm.password);
             }
+        }
+
+        private void accountTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                this.logInBtn_Click(sender, e);
+            }
+        }
+
+        private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                this.logInBtn_Click(sender, e);
+            }
+        }
+
+        private void LoginForm_Shown(object sender, EventArgs e)
+        {
+            this.accountTextBox.Focus();
         }
     }
 }

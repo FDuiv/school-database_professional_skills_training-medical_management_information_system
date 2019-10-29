@@ -124,6 +124,30 @@ namespace medical_management_information_system
         {
             return this.connect;
         }
+        public string getStaffId()
+        {
+            if (this.account!=null)
+            {
+                string sql = "select `MediDB`.`User`.`Staff_id` as Staff_id from `MediDB`.`User` where `MediDB`.`User`.`account`=@account;";
+                MySqlCommand cmd = new MySqlCommand(sql, this.connect);
+                cmd.Parameters.AddWithValue("@account", account);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+                rdr.Read();
+                string staffId = rdr["Staff_id"].ToString();
+                rdr.Close();
+                return staffId;
+            }
+            return "null account";
+        }
+        public string bindAccount(string name,string gender,string birthDay, string companyName, string departmentName,string addrs,string phones)
+        {
+            if (this.account!=null)
+            {
+
+            }
+            return "null account";
+        }
+
         /// <summary>
         /// 断开连接
         /// </summary>
