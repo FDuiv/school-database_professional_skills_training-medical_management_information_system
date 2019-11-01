@@ -19,21 +19,21 @@ namespace medical_management_information_system
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
             //如果没登录就退出
-            if (Program.user.getAccount()==null)
+            if (Program.user.getAccount()!=null)
             {
-                return;
+                //如果没有绑定就绑定
+                if (Program.user.getStaffId()==-1)
+                {
+                    Application.Run(new BindForm());
+                }
+                //如果绑定成功就进入
+                if (Program.user.getStaffId()!=-1)
+                {
+                    Application.Run(new MainForm());
+                }
             }
-            //如果没有绑定就绑定
-            if (Program.user.getStaffId()=="")
-            {
-                Application.Run(new BindForm());
-            }
-            //如果绑定成功就进入
-            if (Program.user.getStaffId()=="")
-            {
-                return;
-            }
-            //Application.Run(new Form());
+            
+             
         }
         
     }

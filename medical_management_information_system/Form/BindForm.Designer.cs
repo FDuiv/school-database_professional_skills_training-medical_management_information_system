@@ -60,6 +60,7 @@
             this.branchComboBox.Size = new System.Drawing.Size(295, 20);
             this.branchComboBox.TabIndex = 0;
             this.branchComboBox.Enter += new System.EventHandler(this.branchComboBox_Enter);
+            this.branchComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.branchComboBox_KeyPress);
             // 
             // branchLab
             // 
@@ -94,6 +95,7 @@
             this.genderComboBox.Size = new System.Drawing.Size(121, 20);
             this.genderComboBox.TabIndex = 4;
             this.genderComboBox.Click += new System.EventHandler(this.genderComboBox_Click);
+            this.genderComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.genderComboBox_KeyPress);
             // 
             // genderLab
             // 
@@ -121,6 +123,7 @@
             this.yearComboBox.Size = new System.Drawing.Size(121, 20);
             this.yearComboBox.TabIndex = 7;
             this.yearComboBox.Enter += new System.EventHandler(this.yearComboBox_Enter);
+            this.yearComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.yearComboBox_KeyPress);
             // 
             // yearLab
             // 
@@ -139,6 +142,7 @@
             this.monthComboBox.Size = new System.Drawing.Size(47, 20);
             this.monthComboBox.TabIndex = 9;
             this.monthComboBox.Enter += new System.EventHandler(this.monthComboBox_Enter);
+            this.monthComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.monthComboBox_KeyPress);
             // 
             // monthLab
             // 
@@ -157,6 +161,7 @@
             this.dayComboBox.Size = new System.Drawing.Size(46, 20);
             this.dayComboBox.TabIndex = 11;
             this.dayComboBox.Enter += new System.EventHandler(this.dayComboBox_Enter);
+            this.dayComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dayComboBox_KeyPress);
             // 
             // dayLab
             // 
@@ -172,9 +177,9 @@
             this.addrLab.AutoSize = true;
             this.addrLab.Location = new System.Drawing.Point(12, 153);
             this.addrLab.Name = "addrLab";
-            this.addrLab.Size = new System.Drawing.Size(155, 12);
+            this.addrLab.Size = new System.Drawing.Size(161, 12);
             this.addrLab.TabIndex = 13;
-            this.addrLab.Text = "住址（多个住址用;分割）：";
+            this.addrLab.Text = "住址（多个住址用；分割）：";
             // 
             // addrTextBox
             // 
@@ -189,9 +194,9 @@
             this.phoneLab.AutoSize = true;
             this.phoneLab.Location = new System.Drawing.Point(204, 153);
             this.phoneLab.Name = "phoneLab";
-            this.phoneLab.Size = new System.Drawing.Size(155, 12);
+            this.phoneLab.Size = new System.Drawing.Size(161, 12);
             this.phoneLab.TabIndex = 15;
-            this.phoneLab.Text = "电话（多个电话用;分割）：";
+            this.phoneLab.Text = "电话（多个电话用；分割）：";
             // 
             // phoneTextBox
             // 
@@ -200,6 +205,7 @@
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(168, 101);
             this.phoneTextBox.TabIndex = 16;
+            this.phoneTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.phoneTextBox_KeyPress);
             // 
             // sureBtn
             // 
@@ -228,6 +234,7 @@
             this.companyComboBox.Size = new System.Drawing.Size(295, 20);
             this.companyComboBox.TabIndex = 18;
             this.companyComboBox.Enter += new System.EventHandler(this.companyComboBox_Enter);
+            this.companyComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.companyComboBox_KeyPress);
             // 
             // departmentLab
             // 
@@ -246,6 +253,7 @@
             this.departmentComboBox.Size = new System.Drawing.Size(295, 20);
             this.departmentComboBox.TabIndex = 20;
             this.departmentComboBox.Enter += new System.EventHandler(this.departmentComboBox_Enter);
+            this.departmentComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.departmentComboBox_KeyPress);
             // 
             // BindForm
             // 

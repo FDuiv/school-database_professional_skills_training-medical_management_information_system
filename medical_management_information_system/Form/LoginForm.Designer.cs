@@ -98,9 +98,9 @@
             // 
             this.connectBtn.Location = new System.Drawing.Point(12, 226);
             this.connectBtn.Name = "connectBtn";
-            this.connectBtn.Size = new System.Drawing.Size(39, 23);
+            this.connectBtn.Size = new System.Drawing.Size(63, 23);
             this.connectBtn.TabIndex = 12;
-            this.connectBtn.Text = "连接";
+            this.connectBtn.Text = "连接设置";
             this.connectBtn.UseVisualStyleBackColor = true;
             this.connectBtn.Click += new System.EventHandler(this.setBtn_Click);
             // 
@@ -118,7 +118,6 @@
             this.Controls.Add(this.signInBtn);
             this.Name = "LoginForm";
             this.Text = "LoginForm";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.Shown += new System.EventHandler(this.LoginForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

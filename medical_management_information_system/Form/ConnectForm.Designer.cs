@@ -67,7 +67,7 @@
             this.connectBtn.Name = "connectBtn";
             this.connectBtn.Size = new System.Drawing.Size(75, 23);
             this.connectBtn.TabIndex = 18;
-            this.connectBtn.Text = "连接";
+            this.connectBtn.Text = "确定";
             this.connectBtn.UseVisualStyleBackColor = true;
             this.connectBtn.Click += new System.EventHandler(this.sureBtn_Click);
             // 
@@ -118,7 +118,7 @@
             this.Controls.Add(this.ipTextBox);
             this.Controls.Add(this.ip_portLab);
             this.Name = "ConnectForm";
-            this.Text = "SetForm";
+            this.Text = "ConnectForm";
             this.Load += new System.EventHandler(this.ConnectForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

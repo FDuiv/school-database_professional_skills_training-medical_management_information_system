@@ -19,6 +19,19 @@ namespace medical_management_information_system
 
         private void signInBtn_Click(object sender, EventArgs e)
         {
+            if (Program.user.getConnect()==null)
+            {
+                if (ConnectForm.ip!=""&&ConnectForm.port!=""&&ConnectForm.user!=""&&ConnectForm.password!="")
+                {
+                    Program.user.Close();
+                    if (Program.user.Connect(ConnectForm.ip, ConnectForm.port, ConnectForm.user, ConnectForm.password)!="Connection successful")
+                    {
+                        MessageBox.Show("无法连接服务器！", "警告");
+                        return;
+                    }
+
+                }
+            }
             if (this.accountTextBox.Text=="")
             {
                 MessageBox.Show("账号不能为空","警告");

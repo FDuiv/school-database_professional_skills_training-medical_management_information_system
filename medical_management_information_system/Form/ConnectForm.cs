@@ -33,15 +33,6 @@ namespace medical_management_information_system
             port=this.portTextBox.Text;
             user=this.userTextBox.Text;
             password=this.passwordTextBox.Text;
-
-            if (ConnectForm.ip!=""&&ConnectForm.port!=""&&ConnectForm.user!=""&&ConnectForm.password!="")
-            {
-                Program.user.Close();
-                Program.user.Connect(ConnectForm.ip, ConnectForm.port, ConnectForm.user, ConnectForm.password);
-                this.Close();
-                return;
-            }
-            MessageBox.Show("连接失败！", "提示");
             this.Close();
         }
     }
