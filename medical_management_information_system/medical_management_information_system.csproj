@@ -47,48 +47,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form\BindForm.cs">
+    <Compile Include="InitPart\InitForm\BindForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\BindForm.Designer.cs">
+    <Compile Include="InitPart\InitForm\BindForm.Designer.cs">
       <DependentUpon>BindForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogicCode\DButils.cs" />
-    <Compile Include="Form\LoginForm.cs">
+    <Compile Include="InitPart\InitCode\DButils.cs" />
+    <Compile Include="InitPart\InitForm\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\LoginForm.Designer.cs">
+    <Compile Include="InitPart\InitForm\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LogicCode\Program.cs" />
+    <Compile Include="InitPart\InitCode\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Form\ConnectForm.cs">
+    <Compile Include="InitPart\InitForm\ConnectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\ConnectForm.Designer.cs">
+    <Compile Include="InitPart\InitForm\ConnectForm.Designer.cs">
       <DependentUpon>ConnectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\SiginForm.cs">
+    <Compile Include="InitPart\InitForm\SiginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\SiginForm.Designer.cs">
+    <Compile Include="InitPart\InitForm\SiginForm.Designer.cs">
       <DependentUpon>SiginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LogicCode\User.cs" />
-    <EmbeddedResource Include="Form\BindForm.resx">
+    <Compile Include="InitPart\InitCode\User.cs" />
+    <Compile Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.Designer.cs">
+      <DependentUpon>ManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\ServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\ServiceForm.Designer.cs">
+      <DependentUpon>ServiceForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="InitPart\InitForm\BindForm.resx">
       <DependentUpon>BindForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\LoginForm.resx">
+    <EmbeddedResource Include="InitPart\InitForm\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,11 +102,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form\ConnectForm.resx">
+    <EmbeddedResource Include="InitPart\InitForm\ConnectForm.resx">
       <DependentUpon>ConnectForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\SiginForm.resx">
+    <EmbeddedResource Include="InitPart\InitForm\SiginForm.resx">
       <DependentUpon>SiginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.resx">
+      <DependentUpon>ManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\ServiceForm.resx">
+      <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -120,6 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
+    <Folder Include="ServicePart\HandlePart\HandleCode\" />
+    <Folder Include="ServicePart\HandlePart\HandleForm\" />
+    <Folder Include="ServicePart\ManagementPart\ManagementCode\" />
+    <Folder Include="ServicePart\PurchasePart\PurchaseCode\" />
+    <Folder Include="ServicePart\PurchasePart\PurchaseForm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

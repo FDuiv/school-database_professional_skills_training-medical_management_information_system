@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace medical_management_information_system
+namespace medical_management_information_system.ServicePart.ManagementPart.ManagementForm
 {
-    public partial class MainForm : Form
+    public partial class ManagementForm : ServiceForm
     {
-        public MainForm()
+        public ManagementForm()
         {
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void ManagementForm_SizeChanged(object sender, EventArgs e)
         {
-            this.tabControl1.Alignment=TabAlignment.Left;
+
         }
     }
 }
