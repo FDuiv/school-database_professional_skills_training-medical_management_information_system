@@ -117,6 +117,9 @@
             this.Controls.Add(this.portTextBox);
             this.Controls.Add(this.ipTextBox);
             this.Controls.Add(this.ip_portLab);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConnectForm";
             this.Text = "ConnectForm";
             this.Load += new System.EventHandler(this.ConnectForm_Load);

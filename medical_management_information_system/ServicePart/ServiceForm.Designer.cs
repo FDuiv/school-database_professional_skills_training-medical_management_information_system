@@ -84,6 +84,7 @@
             this.Controls.Add(this.logoLab);
             this.Name = "ServiceForm";
             this.Text = "ServiceForm";
+            this.Load += new System.EventHandler(this.ServiceForm_Load);
             this.SizeChanged += new System.EventHandler(this.ServiceForm_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -92,9 +93,9 @@
 
         #endregion
 
-        protected System.Windows.Forms.Label logoLab;
-        protected System.Windows.Forms.Button logoffBtn;
-        protected System.Windows.Forms.Button personalDataBtn;
-        protected System.Windows.Forms.TabControl tabControl;
+        internal System.Windows.Forms.Label logoLab;
+        private System.Windows.Forms.Button logoffBtn;
+        private System.Windows.Forms.Button personalDataBtn;
+        private System.Windows.Forms.TabControl tabControl;
     }
 }

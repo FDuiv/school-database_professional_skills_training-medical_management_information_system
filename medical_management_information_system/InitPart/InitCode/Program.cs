@@ -1,5 +1,4 @@
 ﻿using medical_management_information_system.ServicePart;
-using medical_management_information_system.ServicePart.ManagementPart.ManagementForm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +34,7 @@ namespace medical_management_information_system
                 //如果绑定成功就进入
                 if (Program.user.getStaffId()!=-1)
                 {
-                    Application.Run(new ManagementForm());
+                    Application.Run(new ServiceForm());
                     Program.user.Close();
                 }
             } while (ServiceForm.isLogoff);

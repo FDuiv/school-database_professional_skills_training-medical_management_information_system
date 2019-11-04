@@ -112,6 +112,9 @@
             this.Controls.Add(this.passwordLab);
             this.Controls.Add(this.accountLab);
             this.Controls.Add(this.signInBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SiginForm";
             this.Text = "SiginForm";
             this.ResumeLayout(false);

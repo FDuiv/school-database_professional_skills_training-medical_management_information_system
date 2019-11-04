@@ -284,6 +284,9 @@
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.branchLab);
             this.Controls.Add(this.branchComboBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "BindForm";
             this.Text = "BindForm";
             this.Load += new System.EventHandler(this.BindForm_Load);

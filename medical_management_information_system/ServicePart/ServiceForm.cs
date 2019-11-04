@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,10 @@ namespace medical_management_information_system.ServicePart
         {
             InitializeComponent();
         }
-
+        private void ServiceForm_Load(object sender, EventArgs e)
+        {
+            //this.Add_TabPage("维护 ", new test());
+        }
         private void ServiceForm_SizeChanged(object sender, EventArgs e)
         {
             this.tabControl.Location=new Point(this.logoLab.Location.X, this.logoLab.Location.Y+this.logoLab.Size.Height+10);
@@ -36,6 +40,34 @@ namespace medical_management_information_system.ServicePart
         {
             ServiceForm.isLogoff=true;
             this.Close();
+            
         }
+        private void Add_TabPage(string tabPageName, Form tabPageModuleForm) //将标题添加进tabpage中
+        {
+            if (!this.tabControlCheckHave(this.tabControl, tabPageName))
+            {
+                this.tabControl.TabPages.Add(tabPageName);
+                this.tabControl.SelectTab((int)(this.tabControl.TabPages.Count-1));
+                tabPageModuleForm.FormBorderStyle=FormBorderStyle.None;
+                tabPageModuleForm.TopLevel=false;
+                tabPageModuleForm.Show();
+                tabPageModuleForm.Parent=this.tabControl.SelectedTab;
+            }
+        }
+        private bool tabControlCheckHave(TabControl tab, string tabPageName) //看tabpage中是否已有窗体
+        {
+            for (int i = 0; i<tab.TabCount; i++)
+            {
+                if (tab.TabPages[i].Text==tabPageName)
+                {
+                    tab.SelectedIndex=i;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
     }
 }

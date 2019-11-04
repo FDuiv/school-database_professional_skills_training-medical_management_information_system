@@ -75,12 +75,6 @@
       <DependentUpon>SiginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InitPart\InitCode\User.cs" />
-    <Compile Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.Designer.cs">
-      <DependentUpon>ManagementForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ServicePart\ServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,9 +102,6 @@
     <EmbeddedResource Include="InitPart\InitForm\SiginForm.resx">
       <DependentUpon>SiginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\ManagementPart\ManagementForm\ManagementForm.resx">
-      <DependentUpon>ManagementForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,11 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
-    <Folder Include="ServicePart\HandlePart\HandleCode\" />
-    <Folder Include="ServicePart\HandlePart\HandleForm\" />
-    <Folder Include="ServicePart\ManagementPart\ManagementCode\" />
-    <Folder Include="ServicePart\PurchasePart\PurchaseCode\" />
-    <Folder Include="ServicePart\PurchasePart\PurchaseForm\" />
+    <Folder Include="ServicePart\FunctionButton\" />
+    <Folder Include="ServicePart\TabPageModuleForm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
