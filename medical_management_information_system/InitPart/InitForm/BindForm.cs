@@ -214,7 +214,7 @@ namespace medical_management_information_system
         {
             this.branchComboBox.Items.Clear();
             List<string> branchs = new List<string>();
-            branchs=DButils.getBranch(this.companyComboBox.Text);
+            branchs=DButils.getBranchs(this.companyComboBox.Text);
             for (int i = 0; i<branchs.Count(); i++)
             {
                 this.branchComboBox.Items.Add(branchs[i]);
@@ -225,7 +225,7 @@ namespace medical_management_information_system
         {
             this.departmentComboBox.Items.Clear();
             List<string> departments = new List<string>();
-            departments=DButils.getDepartment(this.branchComboBox.Text);
+            departments=DButils.getDepartments(this.branchComboBox.Text);
             for (int i = 0; i<departments.Count(); i++)
             {
                 this.departmentComboBox.Items.Add(departments[i]);
@@ -279,6 +279,17 @@ namespace medical_management_information_system
             {
                 e.Handled=false;
             }
+        }
+
+        private void companyComboBox_TextChanged(object sender, EventArgs e)
+        {
+            this.branchComboBox.Text="";
+            this.departmentComboBox.Text="";
+        }
+
+        private void branchComboBox_TextChanged(object sender, EventArgs e)
+        {
+            this.departmentComboBox.Text="";
         }
     }
 }

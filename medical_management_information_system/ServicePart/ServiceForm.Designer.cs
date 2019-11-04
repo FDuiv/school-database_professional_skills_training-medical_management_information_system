@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.logoLab = new System.Windows.Forms.Label();
-            this.setBtn = new System.Windows.Forms.Button();
+            this.logoffBtn = new System.Windows.Forms.Button();
             this.personalDataBtn = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.SuspendLayout();
@@ -45,14 +45,15 @@
             this.logoLab.TabIndex = 1;
             this.logoLab.Text = "MMIS";
             // 
-            // setBtn
+            // logoffBtn
             // 
-            this.setBtn.Location = new System.Drawing.Point(697, 17);
-            this.setBtn.Name = "setBtn";
-            this.setBtn.Size = new System.Drawing.Size(75, 23);
-            this.setBtn.TabIndex = 2;
-            this.setBtn.Text = "设置";
-            this.setBtn.UseVisualStyleBackColor = true;
+            this.logoffBtn.Location = new System.Drawing.Point(697, 17);
+            this.logoffBtn.Name = "logoffBtn";
+            this.logoffBtn.Size = new System.Drawing.Size(75, 23);
+            this.logoffBtn.TabIndex = 2;
+            this.logoffBtn.Text = "注销";
+            this.logoffBtn.UseVisualStyleBackColor = true;
+            this.logoffBtn.Click += new System.EventHandler(this.logoffBtn_Click);
             // 
             // personalDataBtn
             // 
@@ -79,7 +80,7 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.personalDataBtn);
-            this.Controls.Add(this.setBtn);
+            this.Controls.Add(this.logoffBtn);
             this.Controls.Add(this.logoLab);
             this.Name = "ServiceForm";
             this.Text = "ServiceForm";
@@ -92,7 +93,7 @@
         #endregion
 
         protected System.Windows.Forms.Label logoLab;
-        protected System.Windows.Forms.Button setBtn;
+        protected System.Windows.Forms.Button logoffBtn;
         protected System.Windows.Forms.Button personalDataBtn;
         protected System.Windows.Forms.TabControl tabControl;
     }

@@ -1,4 +1,5 @@
-﻿using medical_management_information_system.ServicePart.ManagementPart.ManagementForm;
+﻿using medical_management_information_system.ServicePart;
+using medical_management_information_system.ServicePart.ManagementPart.ManagementForm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,14 @@ namespace medical_management_information_system
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
-            //如果没登录就退出
-            if (Program.user.getAccount()!=null)
+            do
             {
+                Application.Run(new LoginForm());
+                //如果没登录就退出
+                if (Program.user.getAccount()==null)
+                {
+                    return;
+                }
                 //如果没有绑定就绑定
                 if (Program.user.getStaffId()==-1)
                 {
@@ -31,10 +36,12 @@ namespace medical_management_information_system
                 if (Program.user.getStaffId()!=-1)
                 {
                     Application.Run(new ManagementForm());
+                    Program.user.Close();
                 }
-            }
-            
-             
+            } while (ServiceForm.isLogoff);
+
+
+
         }
         
     }

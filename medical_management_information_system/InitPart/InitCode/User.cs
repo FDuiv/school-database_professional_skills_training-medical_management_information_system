@@ -33,18 +33,21 @@ namespace medical_management_information_system
         /// <returns></returns>
         public int getStaffId()
         {
-            if (this.account!=null)
+            
+            string sql = "select `MediDB`.`User`.`Staff_id` as Staff_id from `MediDB`.`User` where `MediDB`.`User`.`account`=@account;";
+            MySqlCommand cmd = new MySqlCommand(sql, this.connect);
+            cmd.Parameters.AddWithValue("@account", account);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            rdr.Read();
+            if(rdr["Staff_id"].ToString()=="")
             {
-                string sql = "select `MediDB`.`User`.`Staff_id` as Staff_id from `MediDB`.`User` where `MediDB`.`User`.`account`=@account;";
-                MySqlCommand cmd = new MySqlCommand(sql, this.connect);
-                cmd.Parameters.AddWithValue("@account", account);
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                rdr.Read();
-                int staffId = int.Parse(rdr["Staff_id"].ToString());
                 rdr.Close();
-                return staffId;
+                return -1;
             }
-            return -1;
+            int staffId = int.Parse( rdr["Staff_id"].ToString());
+            rdr.Close();
+            return staffId;
+           
         }
         /// <summary>
         /// 获取用户姓名
@@ -360,10 +363,11 @@ namespace medical_management_information_system
                 }
                 rdr.Close();
 
-                sql="insert into `MediDB`.`User` (`MediDB`.`User`.`account`,`MediDB`.`User`.`password`) values (@account,MD5(@password));";
+                sql="insert into `MediDB`.`User` (`MediDB`.`User`.`account`,`MediDB`.`User`.`password`,`MediDB`.`User`.`Jurisdiction_id`) values (@account,MD5(@password),@jurisdictionId);";
                 cmd=new MySqlCommand(sql, this.connect);
                 cmd.Parameters.AddWithValue("@account", account);
                 cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@jurisdictionId", 1);
                 cmd.ExecuteNonQuery();
                 this.account=account;
                 return "Sigin successful";
@@ -395,29 +399,11 @@ namespace medical_management_information_system
             if (this.account!=null)
             {
                 string sql = "";
-                sql="select `MediDB`.`Department`.`Department_id` "+
-                    "from `MediDB`.`Department` "+
-                    "where `MediDB`.`Department`.`MedicineSupermarket_id` in "+
-                    "( "+
-                        "select `MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id` "+
-                        "from `MediDB`.`MedicineSupermarket` "+
-                        "where `MediDB`.`MedicineSupermarket`.`MedicineSupermarketCompany_id` in "+
-                        "( "+
-                            "select `MediDB`.`MedicineSupermarketCompany`.`MedicineSupermarketCompany_id` "+
-                            "from `MediDB`.`MedicineSupermarketCompany` "+
-                            "where `MediDB`.`MedicineSupermarketCompany`.`name`='"+companyName+"' "+
-                        ") "+
-                        "and `MediDB`.`MedicineSupermarket`.`name`='"+branchName+"' "+
-                    ") "+
-                    "and `MediDB`.`Department`.`name`='"+departmentName+"'; ";
-                MySqlCommand cmd = new MySqlCommand(sql, this.connect);
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                rdr.Read();
-                int departmentId=int.Parse(rdr["Department_id"].ToString());
-                rdr.Close();
-
+                MySqlCommand cmd;
+                MySqlDataReader rdr;
+                int departmentId = DButils.getDepartmentId(companyName, branchName, departmentName);
                 sql = "insert into `MediDB`.`Staff` " +
-                    "(`Department_id`,`name`,`gender`,`birthDay`)" +
+                    "(`Department_id`,`name`,`gender`,`birthDay`)"+
                     "values" +
                     "("+departmentId+", '"+name+"', '"+gender+"', '"+birthDay+"');";
                 cmd = new MySqlCommand(sql, this.connect);
@@ -497,31 +483,14 @@ namespace medical_management_information_system
                 cmd = new MySqlCommand(sql, this.connect);
                 cmd.ExecuteNonQuery();
 
-                sql="select `MediDB`.`Department`.`Department_id` "+
-                    "from `MediDB`.`Department` "+
-                    "where `MediDB`.`Department`.`MedicineSupermarket_id` in "+
-                    "( "+
-                        "select `MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id` "+
-                        "from `MediDB`.`MedicineSupermarket` "+
-                        "where `MediDB`.`MedicineSupermarket`.`MedicineSupermarketCompany_id` in "+
-                        "( "+
-                            "select `MediDB`.`MedicineSupermarketCompany`.`MedicineSupermarketCompany_id` "+
-                            "from `MediDB`.`MedicineSupermarketCompany` "+
-                            "where `MediDB`.`MedicineSupermarketCompany`.`name`='"+companyName+"' "+
-                        ") "+
-                        "and `MediDB`.`MedicineSupermarket`.`name`='"+branchName+"' "+
-                    ") "+
-                    "and `MediDB`.`Department`.`name`='"+departmentName+"'; ";
-                cmd = new MySqlCommand(sql, this.connect);
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                rdr.Read();
-                int departmentId = int.Parse(rdr["Department_id"].ToString());
-                rdr.Close();
+                int departmentId = DButils.getDepartmentId(companyName, branchName, departmentName);
+
                 sql="update `MediDB`.`Staff` "+
                     "set `Department_id`="+departmentId+", `name`='"+name+"', `gender`='"+gender+"', `birthDay`='"+birthDay+"'"+
                     "where `Staff_id`="+staffId+"; ";
                 cmd=new MySqlCommand(sql, this.connect);
                 cmd.ExecuteNonQuery();
+
                 return "update success";
             }
 

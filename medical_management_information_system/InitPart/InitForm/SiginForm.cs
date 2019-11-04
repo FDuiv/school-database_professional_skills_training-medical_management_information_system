@@ -59,5 +59,29 @@ namespace medical_management_information_system
                 this.Close();
             }
         }
+
+        private void accountTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                this.signInBtn_Click(sender, e);
+            }
+        }
+
+        private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                this.signInBtn_Click(sender, e);
+            }
+        }
+
+        private void surePasswordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.Enter)
+            {
+                this.signInBtn_Click(sender, e);
+            }
+        }
     }
 }

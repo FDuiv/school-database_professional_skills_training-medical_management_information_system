@@ -59,6 +59,7 @@
             this.branchComboBox.Name = "branchComboBox";
             this.branchComboBox.Size = new System.Drawing.Size(295, 20);
             this.branchComboBox.TabIndex = 0;
+            this.branchComboBox.TextChanged += new System.EventHandler(this.branchComboBox_TextChanged);
             this.branchComboBox.Enter += new System.EventHandler(this.branchComboBox_Enter);
             this.branchComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.branchComboBox_KeyPress);
             // 
@@ -233,6 +234,7 @@
             this.companyComboBox.Name = "companyComboBox";
             this.companyComboBox.Size = new System.Drawing.Size(295, 20);
             this.companyComboBox.TabIndex = 18;
+            this.companyComboBox.TextChanged += new System.EventHandler(this.companyComboBox_TextChanged);
             this.companyComboBox.Enter += new System.EventHandler(this.companyComboBox_Enter);
             this.companyComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.companyComboBox_KeyPress);
             // 
