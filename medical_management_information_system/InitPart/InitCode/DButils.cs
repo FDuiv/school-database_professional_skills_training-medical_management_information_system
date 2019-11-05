@@ -77,5 +77,19 @@ namespace medical_management_information_system
             rdr.Close();
             return departmentId;
         }
+        static public int getJurisdictionId(string name)
+        {
+            string sql = "select `MediDB`.`Jurisdiction`.`Jurisdiction_id` " +
+                "from `MediDB`.`Jurisdiction` " +
+                "where `MediDB`.`Jurisdiction`.`name`='"+name+"';";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int jurisdictionId = int.Parse(rdr["Jurisdiction_id"].ToString());
+            rdr.Close();
+            return jurisdictionId;
+        }
     }
 }

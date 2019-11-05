@@ -31,7 +31,7 @@ namespace medical_management_information_system
         /// 获取员工id
         /// </summary>
         /// <returns></returns>
-        public int getStaffId()
+        private int getStaffId()
         {
             
             string sql = "select `MediDB`.`User`.`Staff_id` as Staff_id from `MediDB`.`User` where `MediDB`.`User`.`account`=@account;";
@@ -112,9 +112,9 @@ namespace medical_management_information_system
         /// <summary>
         /// 获取用户所属部门id
         /// </summary>
-        private int getDepartment_id()
+        private int getDepartmentId()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
@@ -134,12 +134,12 @@ namespace medical_management_information_system
         /// </summary>
         public string getDepartmentName()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             { 
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`Department`.`name` from `MediDB`.`Department` where `MediDB`.`Department`.`Department_id`="+this.getDepartment_id()+";";
+                sql="select `MediDB`.`Department`.`name` from `MediDB`.`Department` where `MediDB`.`Department`.`Department_id`="+this.getDepartmentId()+";";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
                 rdr.Read();
@@ -147,19 +147,19 @@ namespace medical_management_information_system
                 rdr.Close();
                 return departmentName;
             }
-            return "null account";
+            return "";
         }
         /// <summary>
         /// 获取用户所属分部id
         /// </summary>
-        private int getBranch_id()
+        private int getBranchId()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`Department`.`MedicineSupermarket_id` from `MediDB`.`Department` where`MediDB`.`Department`.`Department_id`="+this.getDepartment_id()+";";
+                sql="select `MediDB`.`Department`.`MedicineSupermarket_id` from `MediDB`.`Department` where`MediDB`.`Department`.`Department_id`="+this.getDepartmentId()+";";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
                 rdr.Read();
@@ -174,12 +174,12 @@ namespace medical_management_information_system
         /// </summary>
         public string getBranchName()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`MedicineSupermarket`.`name` from `MediDB`.`MedicineSupermarket` where `MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id`="+this.getBranch_id()+";";
+                sql="select `MediDB`.`MedicineSupermarket`.`name` from `MediDB`.`MedicineSupermarket` where `MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id`="+this.getBranchId()+";";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
                 rdr.Read();
@@ -192,14 +192,14 @@ namespace medical_management_information_system
         /// <summary>
         /// 获取用户所属公司id
         /// </summary>
-        private int getCompany_id()
+        private int getCompanyId()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`MedicineSupermarket`.`MedicineSupermarketCompany_id` from `MediDB`.`MedicineSupermarket` where`MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id`="+this.getBranch_id()+";";
+                sql="select `MediDB`.`MedicineSupermarket`.`MedicineSupermarketCompany_id` from `MediDB`.`MedicineSupermarket` where`MediDB`.`MedicineSupermarket`.`MedicineSupermarket_id`="+this.getBranchId()+";";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
                 rdr.Read();
@@ -209,17 +209,18 @@ namespace medical_management_information_system
             }
             return -1;
         }
+
         /// <summary>
         /// 获取用户所属公司名
         /// </summary>
         public string getCompanyName()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`MedicineSupermarketCompany`.`name` from `MediDB`.`MedicineSupermarketCompany` where `MediDB`.`MedicineSupermarketCompany`.`MedicineSupermarketCompany_id`="+this.getCompany_id()+";";
+                sql="select `MediDB`.`MedicineSupermarketCompany`.`name` from `MediDB`.`MedicineSupermarketCompany` where `MediDB`.`MedicineSupermarketCompany`.`MedicineSupermarketCompany_id`="+this.getCompanyId()+";";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
                 rdr.Read();
@@ -234,7 +235,7 @@ namespace medical_management_information_system
         /// </summary>
         public string[] getAddrs()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
@@ -257,7 +258,7 @@ namespace medical_management_information_system
         /// </summary>
         public string[] getPhones()
         {
-            if (this.account!=null)
+            if (this.getStaffId()!=-1)
             {
                 string sql = "";
                 MySqlCommand cmd;
@@ -275,6 +276,59 @@ namespace medical_management_information_system
             }
             return new string[] { };
         }
+        /// <summary>
+        /// 获取用户权限组id
+        /// </summary>
+        private int getJurisdictionId()
+        {
+            if (this.account!=null)
+            {
+                string sql = "";
+                MySqlCommand cmd;
+                MySqlDataReader rdr;
+                sql="select `MediDB`.`User`.`Jurisdiction_id` " +
+                    "from `MediDB`.`User` " +
+                    "where `MediDB`.`User`.`account`='"+this.account+"'; ";
+                cmd=new MySqlCommand(sql, this.connect);
+                rdr=cmd.ExecuteReader();
+                rdr.Read();
+                int jurisdictionId = int.Parse(rdr["Jurisdiction_id"].ToString());
+                rdr.Close();
+                return jurisdictionId;
+            }
+            return -1;
+        }
+
+
+        /// <summary>
+        /// 获取权限字典
+        /// </summary>
+        public Dictionary<string, bool> getJurisdictions()
+        {
+            Dictionary<string, bool> jurisdictions = new Dictionary<string, bool>();
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            sql="select * " +
+                "from `MediDB`.`Jurisdiction` " +
+                "where `MediDB`.`Jurisdiction`.`Jurisdiction_id`="+this.getJurisdictionId()+"; ";
+            cmd=new MySqlCommand(sql, this.connect);
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            jurisdictions["采购订单页表"]=(rdr["采购订单页表"].ToString()=="true");
+            jurisdictions["请购单页表"]=(rdr["请购单页表"].ToString()=="true");
+            jurisdictions["经销商管理页表"]=(rdr["经销商管理页表"].ToString()=="true");
+            jurisdictions["采购规划页表"]=(rdr["采购规划页表"].ToString()=="true");
+            jurisdictions["药品管理页表"]=(rdr["药品管理页表"].ToString()=="true");
+            jurisdictions["财务管理页表"]=(rdr["财务管理页表"].ToString()=="true");
+            jurisdictions["顾客统计页表"]=(rdr["顾客统计页表"].ToString()=="true");
+            jurisdictions["采购人员管理页表"]=(rdr["采购人员管理页表"].ToString()=="true");
+            jurisdictions["经办人管理页表"]=(rdr["经办人管理页表"].ToString()=="true");
+            jurisdictions["购物窗口页表"]=(rdr["购物窗口页表"].ToString()=="true");
+            rdr.Close();
+            return jurisdictions;
+        }
+
         /// <summary>
         /// 连接数据库
         /// </summary>
@@ -416,8 +470,9 @@ namespace medical_management_information_system
                 int staffId = int.Parse(rdr["Staff_id"].ToString());
                 rdr.Close();
 
+                int jurisdictionId = DButils.getJurisdictionId(companyName+"_"+branchName+"_"+departmentName);
                 sql="update `MediDB`.`User` "+
-                    "set `Staff_id`="+staffId+" "+
+                    "set `Staff_id`="+staffId+",`Jurisdiction_id`="+jurisdictionId+" "+
                     "where `MediDB`.`User`.`account`='"+this.account+"'; ";
                 for (int i = 0; i<addrs.Count; i++)
                 {
@@ -484,13 +539,18 @@ namespace medical_management_information_system
                 cmd.ExecuteNonQuery();
 
                 int departmentId = DButils.getDepartmentId(companyName, branchName, departmentName);
-
                 sql="update `MediDB`.`Staff` "+
                     "set `Department_id`="+departmentId+", `name`='"+name+"', `gender`='"+gender+"', `birthDay`='"+birthDay+"'"+
                     "where `Staff_id`="+staffId+"; ";
                 cmd=new MySqlCommand(sql, this.connect);
                 cmd.ExecuteNonQuery();
 
+                int jurisdictionId = DButils.getJurisdictionId(companyName+"_"+branchName+"_"+departmentName);
+                sql="update `MediDB`.`User` "+
+                    "set `Staff_id`="+staffId+",`Jurisdiction_id`="+jurisdictionId+" "+
+                    "where `MediDB`.`User`.`account`='"+this.account+"'; ";
+                cmd=new MySqlCommand(sql, this.connect);
+                cmd.ExecuteNonQuery();
                 return "update success";
             }
 

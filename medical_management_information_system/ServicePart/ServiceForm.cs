@@ -1,4 +1,5 @@
 ﻿
+using medical_management_information_system.ServicePart.TabPageModuleForm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,12 @@ namespace medical_management_information_system.ServicePart
         }
         private void ServiceForm_Load(object sender, EventArgs e)
         {
-            //this.Add_TabPage("维护 ", new test());
+            Dictionary<string, bool> jurisdictions = Program.user.getJurisdictions();
+            foreach (KeyValuePair<string, bool> kvp in jurisdictions)
+            {
+                this.Add_TabPage(kvp.Key, this.selectForm(kvp.Key));
+            }
+            this.tabControl.SelectTab(this.tabControl.Controls[0].Name);
         }
         private void ServiceForm_SizeChanged(object sender, EventArgs e)
         {
@@ -42,12 +48,19 @@ namespace medical_management_information_system.ServicePart
             this.Close();
             
         }
+
+        /********************私有功能函数***********************/
         private void Add_TabPage(string tabPageName, Form tabPageModuleForm) //将标题添加进tabpage中
         {
+            if (tabPageModuleForm==null)
+            {
+                return; 
+            }
             if (!this.tabControlCheckHave(this.tabControl, tabPageName))
             {
                 this.tabControl.TabPages.Add(tabPageName);
                 this.tabControl.SelectTab((int)(this.tabControl.TabPages.Count-1));
+                this.tabControl.SelectedTab.Name=tabPageName;
                 tabPageModuleForm.FormBorderStyle=FormBorderStyle.None;
                 tabPageModuleForm.TopLevel=false;
                 tabPageModuleForm.Show();
@@ -58,7 +71,7 @@ namespace medical_management_information_system.ServicePart
         {
             for (int i = 0; i<tab.TabCount; i++)
             {
-                if (tab.TabPages[i].Text==tabPageName)
+                if (tab.TabPages[i].Name==tabPageName)
                 {
                     tab.SelectedIndex=i;
                     return true;
@@ -66,7 +79,19 @@ namespace medical_management_information_system.ServicePart
             }
             return false;
         }
-
+        private Form selectForm(string formName)
+        {
+            switch (formName)
+            {
+                case "采购订单页表":
+                    return new PurchaseOrderForm(); 
+                    break;
+                case "请购单页表":
+                    return new RequisitionForm();
+                    break;
+            }
+            return null;
+        }
 
 
     }

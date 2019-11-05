@@ -91,7 +91,7 @@ namespace medical_management_information_system
                 return;
             }
             string result="";
-            if (Program.user.getStaffId()==-1)
+            if (Program.user.getDepartmentName()=="")
             {
                 result = Program.user.bindAccount(name, gender, birthDay, companyName, branchName, departmentName, addrsNew, phonesNew);
             }
@@ -109,7 +109,7 @@ namespace medical_management_information_system
 
         private void BindForm_Load(object sender, EventArgs e)
         {
-            if (Program.user.getStaffId()!=-1)
+            if (Program.user.getDepartmentName()!="")
             {
                 //已绑定，个人资料抽取
                 this.nameTextBox.Text=Program.user.getName();

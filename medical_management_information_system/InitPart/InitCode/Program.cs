@@ -27,12 +27,12 @@ namespace medical_management_information_system
                     return;
                 }
                 //如果没有绑定就绑定
-                if (Program.user.getStaffId()==-1)
+                if (Program.user.getDepartmentName()=="")
                 {
                     Application.Run(new BindForm());
                 }
                 //如果绑定成功就进入
-                if (Program.user.getStaffId()!=-1)
+                if (Program.user.getDepartmentName()!="")
                 {
                     Application.Run(new ServiceForm());
                     Program.user.Close();

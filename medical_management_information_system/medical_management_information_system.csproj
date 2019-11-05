@@ -81,6 +81,18 @@
     <Compile Include="ServicePart\ServiceForm.Designer.cs">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.Designer.cs">
+      <DependentUpon>PurchaseOrderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\RequisitionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\RequisitionForm.Designer.cs">
+      <DependentUpon>RequisitionForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="InitPart\InitForm\BindForm.resx">
       <DependentUpon>BindForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,7 +133,6 @@
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
     <Folder Include="ServicePart\FunctionButton\" />
-    <Folder Include="ServicePart\TabPageModuleForm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
