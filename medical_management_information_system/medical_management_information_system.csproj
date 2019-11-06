@@ -81,6 +81,18 @@
     <Compile Include="ServicePart\ServiceForm.Designer.cs">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagementForm.Designer.cs">
+      <DependentUpon>DealerManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.Designer.cs">
+      <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +129,18 @@
     <EmbeddedResource Include="ServicePart\ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagementForm.resx">
+      <DependentUpon>DealerManagementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.resx">
+      <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.resx">
+      <DependentUpon>PurchaseOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\RequisitionForm.resx">
+      <DependentUpon>RequisitionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -132,7 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
-    <Folder Include="ServicePart\FunctionButton\" />
+    <Folder Include="ServicePart\OtherForm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

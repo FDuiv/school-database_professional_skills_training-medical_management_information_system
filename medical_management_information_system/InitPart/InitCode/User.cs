@@ -33,21 +33,21 @@ namespace medical_management_information_system
         /// <returns></returns>
         private int getStaffId()
         {
-            
+
             string sql = "select `MediDB`.`User`.`Staff_id` as Staff_id from `MediDB`.`User` where `MediDB`.`User`.`account`=@account;";
             MySqlCommand cmd = new MySqlCommand(sql, this.connect);
             cmd.Parameters.AddWithValue("@account", account);
             MySqlDataReader rdr = cmd.ExecuteReader();
             rdr.Read();
-            if(rdr["Staff_id"].ToString()=="")
+            if (rdr["Staff_id"].ToString()=="")
             {
                 rdr.Close();
                 return -1;
             }
-            int staffId = int.Parse( rdr["Staff_id"].ToString());
+            int staffId = int.Parse(rdr["Staff_id"].ToString());
             rdr.Close();
             return staffId;
-           
+
         }
         /// <summary>
         /// 获取用户姓名
@@ -59,9 +59,9 @@ namespace medical_management_information_system
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql ="select `MediDB`.`Staff`.`name` from `MediDB`.`Staff` where `MediDB`.`Staff`.`Staff_id`="+this.getStaffId()+";";
-                cmd = new MySqlCommand(sql, this.connect);
-                rdr = cmd.ExecuteReader();
+                sql="select `MediDB`.`Staff`.`name` from `MediDB`.`Staff` where `MediDB`.`Staff`.`Staff_id`="+this.getStaffId()+";";
+                cmd=new MySqlCommand(sql, this.connect);
+                rdr=cmd.ExecuteReader();
                 rdr.Read();
                 string name = rdr["name"].ToString();
                 rdr.Close();
@@ -135,7 +135,7 @@ namespace medical_management_information_system
         public string getDepartmentName()
         {
             if (this.getStaffId()!=-1)
-            { 
+            {
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
@@ -286,8 +286,8 @@ namespace medical_management_information_system
                 string sql = "";
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
-                sql="select `MediDB`.`User`.`Jurisdiction_id` " +
-                    "from `MediDB`.`User` " +
+                sql="select `MediDB`.`User`.`Jurisdiction_id` "+
+                    "from `MediDB`.`User` "+
                     "where `MediDB`.`User`.`account`='"+this.account+"'; ";
                 cmd=new MySqlCommand(sql, this.connect);
                 rdr=cmd.ExecuteReader();
@@ -309,24 +309,91 @@ namespace medical_management_information_system
             string sql = "";
             MySqlCommand cmd;
             MySqlDataReader rdr;
-            sql="select * " +
-                "from `MediDB`.`Jurisdiction` " +
+            sql="select * "+
+                "from `MediDB`.`Jurisdiction` "+
                 "where `MediDB`.`Jurisdiction`.`Jurisdiction_id`="+this.getJurisdictionId()+"; ";
             cmd=new MySqlCommand(sql, this.connect);
             rdr=cmd.ExecuteReader();
             rdr.Read();
-            jurisdictions["采购订单页表"]=(rdr["采购订单页表"].ToString()=="true");
-            jurisdictions["请购单页表"]=(rdr["请购单页表"].ToString()=="true");
-            jurisdictions["经销商管理页表"]=(rdr["经销商管理页表"].ToString()=="true");
-            jurisdictions["采购规划页表"]=(rdr["采购规划页表"].ToString()=="true");
-            jurisdictions["药品管理页表"]=(rdr["药品管理页表"].ToString()=="true");
-            jurisdictions["财务管理页表"]=(rdr["财务管理页表"].ToString()=="true");
-            jurisdictions["顾客统计页表"]=(rdr["顾客统计页表"].ToString()=="true");
-            jurisdictions["采购人员管理页表"]=(rdr["采购人员管理页表"].ToString()=="true");
-            jurisdictions["经办人管理页表"]=(rdr["经办人管理页表"].ToString()=="true");
-            jurisdictions["购物窗口页表"]=(rdr["购物窗口页表"].ToString()=="true");
+            jurisdictions["采购订单页表"]=(rdr["采购订单页表"].ToString()=="True");
+            jurisdictions["请购单页表"]=(rdr["请购单页表"].ToString()=="True");
+            jurisdictions["经销商管理页表"]=(rdr["经销商管理页表"].ToString()=="True");
+            jurisdictions["采购规划页表"]=(rdr["采购规划页表"].ToString()=="True");
+            jurisdictions["药品管理页表"]=(rdr["药品管理页表"].ToString()=="True");
+            jurisdictions["财务管理页表"]=(rdr["财务管理页表"].ToString()=="True");
+            jurisdictions["顾客统计页表"]=(rdr["顾客统计页表"].ToString()=="True");
+            jurisdictions["采购人员管理页表"]=(rdr["采购人员管理页表"].ToString()=="True");
+            jurisdictions["经办人管理页表"]=(rdr["经办人管理页表"].ToString()=="True");
+            jurisdictions["购物窗口页表"]=(rdr["购物窗口页表"].ToString()=="True");
             rdr.Close();
             return jurisdictions;
+        }
+        /// <summary>
+        /// 获取采购单
+        /// </summary>
+        public string[] getPurchaseOrders(bool isComplete,bool isPurchaseDate)
+        {
+            if (this.account!=null)
+            {
+                List<string> purchaseOrders = new List<string>();
+                string sql = "";
+                MySqlCommand cmd;
+                MySqlDataReader rdr;
+                if (isComplete)
+                {
+                    if (isPurchaseDate)
+                    {
+                        sql="select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
+                            "from `MediDB`.`PurchaseOrders` "+
+                            "where `isDelete` = '否' " +
+                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" " +
+                            "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc; ";
+                    }
+                    else
+                    {
+                        sql="select `MediDB`.`PurchaseOrders`.`completDate` "+
+                            "from `MediDB`.`PurchaseOrders` "+
+                            "where `isDelete` = '否' " +
+                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" " +
+                            "order by `MediDB`.`PurchaseOrders`.`completDate` desc; ";
+                    }
+                }
+                else
+                {
+                    if (isPurchaseDate)
+                    {
+                        sql="select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
+                        "from `MediDB`.`PurchaseOrders` "+
+                        "where `isDelete` = '否' " +
+                        "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" " +
+                        "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc; ";
+                    }
+                    else
+                    {
+                        sql="select `MediDB`.`PurchaseOrders`.`completDate` "+
+                               "from `MediDB`.`PurchaseOrders` "+
+                               "where `isDelete` = '否' " +
+                               "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" " +
+                               "order by `MediDB`.`PurchaseOrders`.`completDate` desc; ";
+                    }
+                }
+                cmd=new MySqlCommand(sql, this.connect);
+                rdr=cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    if (isPurchaseDate)
+                    {
+                        purchaseOrders.Add(rdr["purchaseDate"].ToString());
+                    }
+                    else
+                    {
+                        purchaseOrders.Add(rdr["completDate"].ToString());
+                    }
+                }
+                rdr.Close();
+                return purchaseOrders.ToArray();
+            }
+            return new List<string>().ToArray();
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,5 +92,75 @@ namespace medical_management_information_system
             rdr.Close();
             return jurisdictionId;
         }
+        static public int getPurchaseOrdersId(string date,bool isPurchaseDate)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            if (isPurchaseDate)
+            {
+                sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` from `MediDB`.`PurchaseOrders` where `MediDB`.`PurchaseOrders`.`purchaseDate` = "+date+"; ";
+            }
+            else
+            {
+                sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` from `MediDB`.`PurchaseOrders` where `MediDB`.`PurchaseOrders`.`completDate` = "+date+"; ";
+            }
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int purchaseOrdersId = int.Parse(rdr["PurchaseOrders_id"].ToString());
+            rdr.Close();
+            return purchaseOrdersId;
+        }
+        static public DataTable getDrugGridView()
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            MySqlDataAdapter adapter;
+            DataTable newDataTable;
+            sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', " +
+                "`MediDB`.`Drug`.`name` '药品名'," +
+                "`MediDB`.`Drug`.`approvalNumber` '批准文号'," +
+                "`MediDB`.`Drug`.`attendingFunctions` '功能主治'," +
+                "`MediDB`.`Drug`.`taboo` '禁忌'," +
+                "`MediDB`.`Drug`.`adverseReaction` '不良反应'," +
+                "`MediDB`.`Drug`.`expirationDate` '保质期/月'," +
+                "`MediDB`.`Drug`.`usage` '服用方法'," +
+                "`MediDB`.`Drug`.`unitPrice` '单价'" +
+                "from `MediDB`.`Drug` " +
+                "where `MediDB`.`Drug`.`isDelete`='否';";
+            adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
+            newDataTable=new DataTable();
+            adapter.Fill(newDataTable);
+            return newDataTable;
+        }
+        /*
+select `a`.`Drug_id` '药品编号',
+`a`.`name` '药品名',
+`a`.`approvalNumber` '批准文号',
+`a`.`attendingFunctions` '功能主治',
+`a`.`taboo` '禁忌',
+`a`.`adverseReaction` '不良反应',
+`a`.`expirationDate` '保质期/月',
+`a`.`usage` '服用方法',
+`b`.`PurchasingNum` '采购数量',
+`b`.`unitPrice` '单价',
+`a`.`isDelete` '药品是否被删除'
+from `MediDB`.`Drug` as `a`,
+	(select `MediDB`.`PurchasingList`.`PurchasingList_id`, 
+    `MediDB`.`PurchasingList`.`Drug_id`,
+    `MediDB`.`PurchasingList`.`PurchasingNum`,
+    `MediDB`.`PurchasingList`.`unitPrice`
+	from `MediDB`.`PurchasingList` 
+	where `MediDB`.`PurchasingList`.`isDelete` = 0
+	and `MediDB`.`PurchasingList`.`PurchaseOrders_id` in 
+	(
+		select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id`
+		from `MediDB`.`PurchaseOrders`
+		where `MediDB`.`PurchaseOrders`.`purchaseDate`='2019-11-05 18:33:30'
+	)) as `b`
+where `a`.`Drug_id`= `b`.`Drug_id`;
+         */
     }
 }
