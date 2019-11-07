@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,9 +21,10 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 
         public void DrugAdministrationForm_Load(object sender, EventArgs e)
         {
-
-            this.flashBtn_Click(sender, e);
+            this.comboBox.AutoCompleteSource=AutoCompleteSource.ListItems;
+            this.comboBox.AutoCompleteMode=AutoCompleteMode.SuggestAppend;
             this.deleteBtn.Enabled=false;
+            this.flashBtn_Click(sender, e);
         }
 
         private void DrugAdministrationForm_SizeChanged(object sender, EventArgs e)
@@ -31,30 +33,6 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             this.flashBtn.Location=new Point(this.printingBtn.Location.X-this.printingBtn.Size.Width-6, this.flashBtn.Location.Y);
             this.generatePurchaseOrderBtn.Location=new Point(this.flashBtn.Location.X-this.flashBtn.Size.Width-6,this.generatePurchaseOrderBtn.Location.Y);
             this.dataGridView.Size=new Size(this.Size.Width-22, this.Size.Height-52);
-        }
-
-
-        private void comboBox_TextChanged(object sender, EventArgs e)
-        {
-            this.dataGridView.DataSource=DButils.getDrugGridView(-1,this.comboBox.Text);
-            if (this.comboBox.Text!="")
-            {
-
-            }
-            else
-            {
-            }
-        }
-
-        private void comboBox_Click(object sender, EventArgs e)
-        {
-            this.comboBox.Text="";
-            this.comboBox.DataSource=this.dataGridView.DataSource;
-            this.comboBox.ValueMember=this.dataGridView.Columns[0].HeaderText;
-            this.comboBox.DisplayMember=this.dataGridView.Columns[1].HeaderText;
-            //this.comboBox.AutoCompleteSource=AutoCompleteSource.ListItems;
-            //this.comboBox.AutoCompleteMode=AutoCompleteMode.SuggestAppend;
-            this.comboBox.Text="";
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -66,6 +44,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
         private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             new AddDrugForm(int.Parse(this.dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString())).ShowDialog();
+            this.flashBtn_Click(sender, e);
         }
 
         private void dataGridView_KeyDown(object sender, KeyEventArgs e)
@@ -116,7 +95,24 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
                 this.Size=this.Parent.Size;
             }
             this.DrugAdministrationForm_SizeChanged(sender, e);
-            this.dataGridView.DataSource=DButils.getDrugGridView();
+            this.dataGridView.DataSource=DButils.getDrugGridView(-1, this.comboBox.Text);
+            this.comboBox.Items.Clear();
+            for (int i = 0; i<((DataTable)this.dataGridView.DataSource).Rows.Count; i++)
+            {
+                this.comboBox.Items.Add(((DataTable)this.dataGridView.DataSource).Rows[i][1]);
+            }
+
         }
+
+        private void comboBox_TextChanged(object sender, EventArgs e)
+        {
+            this.dataGridView.DataSource=DButils.getDrugGridView(-1, this.comboBox.Text);
+            this.comboBox.Items.Clear();
+            for (int i = 0; i<((DataTable)this.dataGridView.DataSource).Rows.Count; i++)
+            {
+                this.comboBox.Items.Add(((DataTable)this.dataGridView.DataSource).Rows[i][1]);
+            }
+        }
+
     }
 }

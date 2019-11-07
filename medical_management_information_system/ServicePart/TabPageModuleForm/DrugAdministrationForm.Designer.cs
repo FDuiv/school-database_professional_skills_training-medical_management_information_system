@@ -107,7 +107,6 @@
             this.comboBox.Size = new System.Drawing.Size(121, 20);
             this.comboBox.TabIndex = 7;
             this.comboBox.TextChanged += new System.EventHandler(this.comboBox_TextChanged);
-            this.comboBox.Click += new System.EventHandler(this.comboBox_Click);
             // 
             // drugNameLab
             // 

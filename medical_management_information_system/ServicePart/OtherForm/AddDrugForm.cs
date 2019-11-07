@@ -12,17 +12,23 @@ namespace medical_management_information_system.ServicePart.OtherForm
 {
     public partial class AddDrugForm : Form
     {
-        public AddDrugForm(int drug_id=-1)
+        private int drugId=-1;
+        public AddDrugForm(int drugId=-1)
         {
             InitializeComponent();
-            if (drug_id!=-1)
+            this.drugId=drugId;
+            if (this.drugId!=-1)
             {
-                DataTable dataTable = DButils.getDrugGridView(drug_id,"");
+                DataTable dataTable = DButils.getDrugGridView(this.drugId, "");
                 this.nameTextBox.Text=dataTable.Rows[0][1].ToString();
-            }
-            else
-            {
-
+                this.approvalNumTextBox.Text=dataTable.Rows[0][2].ToString();
+                this.expirationDateTextBox.Text=dataTable.Rows[0][6].ToString();
+                this.unitPriceTextBox.Text=dataTable.Rows[0][8].ToString();
+                this.attendingFunctionsTextBox.Text=dataTable.Rows[0][3].ToString();
+                this.tabooTextBox.Text=dataTable.Rows[0][4].ToString();
+                this.adverseReactionTextBox.Text=dataTable.Rows[0][5].ToString();
+                this.usageTextBox.Text=dataTable.Rows[0][7].ToString();
+                this.addBtn.Text="修改";
             }
         }
 
@@ -120,7 +126,14 @@ namespace medical_management_information_system.ServicePart.OtherForm
                 MessageBox.Show("服用方法不能为空！", "警告");
                 return;
             }
-            DButils.addDrug(name, approvalNumber, attendingFunctions, taboo, adverseReaction, expirationDate, usage, unitPrice);
+            if (this.drugId==-1)
+            {
+                DButils.addDrug(name, approvalNumber, attendingFunctions, taboo, adverseReaction, expirationDate, usage, unitPrice);
+            }
+            else
+            {
+                DButils.updateDrug(this.drugId,name, approvalNumber, attendingFunctions, taboo, adverseReaction, expirationDate, usage, unitPrice);
+            }
             this.Close();
         }
     }

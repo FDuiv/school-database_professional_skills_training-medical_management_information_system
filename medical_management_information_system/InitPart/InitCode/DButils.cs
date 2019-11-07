@@ -194,7 +194,6 @@ namespace medical_management_information_system
             adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
             newDataTable=new DataTable();
             adapter.Fill(newDataTable);
-            newDataTable.Rows[0].ToString();
             return newDataTable;
         }
         static public void deleteDrug(List<int> drugIds)
@@ -227,6 +226,28 @@ namespace medical_management_information_system
                     "(`name`,`approvalNumber`,`attendingFunctions`,`taboo`,`adverseReaction`,`expirationDate`,`usage`,`unitPrice`) "+
                     "values"+
                     "('"+name+"','"+approvalNumber+"','"+attendingFunctions+"','"+taboo+"','"+adverseReaction+"',"+expirationDate+",'"+usage+"',"+unitPrice+");";
+                cmd=new MySqlCommand(sql, Program.user.getConnect());
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            { }
+        }
+        static public void updateDrug(int drugId,string name, string approvalNumber, string attendingFunctions, string taboo, string adverseReaction, int expirationDate, string usage, double unitPrice)
+        {
+            try
+            {
+                string sql = "";
+                MySqlCommand cmd;
+                sql="update `MediDB`.`Drug` "+
+                    "set `name`='"+name+"'," +
+                    "`approvalNumber` = '"+approvalNumber+"'," +
+                    "`attendingFunctions`='"+attendingFunctions+"'," +
+                    "`taboo`='"+taboo+"'," +
+                    "`adverseReaction`='"+adverseReaction+"'," +
+                    "`expirationDate`="+expirationDate+"," +
+                    "`usage`='"+usage+"'," +
+                    "`unitPrice`="+unitPrice+" "+
+                    "where `MediDB`.`Drug`.`Drug_id`="+drugId+";";
                 cmd=new MySqlCommand(sql, Program.user.getConnect());
                 cmd.ExecuteNonQuery();
             }
