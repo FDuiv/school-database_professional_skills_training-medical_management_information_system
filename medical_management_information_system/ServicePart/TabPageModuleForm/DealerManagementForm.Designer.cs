@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.treeView = new System.Windows.Forms.TreeView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.addBtn = new System.Windows.Forms.Button();
             this.editBtn = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // treeView1
+            // treeView
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 12);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(200, 437);
-            this.treeView1.TabIndex = 0;
+            this.treeView.Location = new System.Drawing.Point(12, 12);
+            this.treeView.Name = "treeView";
+            this.treeView.Size = new System.Drawing.Size(200, 437);
+            this.treeView.TabIndex = 0;
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(218, 41);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(554, 408);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Location = new System.Drawing.Point(218, 41);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowTemplate.Height = 23;
+            this.dataGridView.Size = new System.Drawing.Size(554, 408);
+            this.dataGridView.TabIndex = 1;
             // 
             // addBtn
             // 
@@ -77,21 +77,21 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.editBtn);
             this.Controls.Add(this.addBtn);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.dataGridView);
+            this.Controls.Add(this.treeView);
             this.Name = "DealerManagementForm";
             this.Text = "DealerManagement";
             this.Load += new System.EventHandler(this.DealerManagementForm_Load);
             this.SizeChanged += new System.EventHandler(this.DealerManagementForm_SizeChanged);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button addBtn;
         private System.Windows.Forms.Button editBtn;
     }

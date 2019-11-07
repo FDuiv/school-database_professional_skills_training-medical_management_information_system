@@ -75,6 +75,12 @@
       <DependentUpon>SiginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InitPart\InitCode\User.cs" />
+    <Compile Include="ServicePart\OtherForm\AddDrugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\OtherForm\AddDrugForm.Designer.cs">
+      <DependentUpon>AddDrugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicePart\ServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     <EmbeddedResource Include="InitPart\InitForm\SiginForm.resx">
       <DependentUpon>SiginForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\OtherForm\AddDrugForm.resx">
+      <DependentUpon>AddDrugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,7 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
-    <Folder Include="ServicePart\OtherForm\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

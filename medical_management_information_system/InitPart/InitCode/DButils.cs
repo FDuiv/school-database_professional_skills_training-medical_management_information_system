@@ -112,28 +112,126 @@ namespace medical_management_information_system
             rdr.Close();
             return purchaseOrdersId;
         }
-        static public DataTable getDrugGridView()
+        static public string[] getDrugNames(string name="")
+        {
+           
+            List<string> drugNames = new List<string>();
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            if (name=="")
+            {
+                sql="select`MediDB`.`Drug`.`name` "+
+                    "from `MediDB`.`Drug`;";
+            }
+            else
+            {
+                sql="select`MediDB`.`Drug`.`name` "+
+                    "from `MediDB`.`Drug` " +
+                    "where instr(`MediDB`.`Drug`.`name`,'"+name+"');";
+            }
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                drugNames.Add(rdr["name"].ToString());
+            }
+            rdr.Close();
+            return drugNames.ToArray();
+        }
+
+        static public DataTable getDrugGridView(int id=-1,string name="")
         {
             string sql = "";
             MySqlCommand cmd;
             MySqlDataReader rdr;
             MySqlDataAdapter adapter;
             DataTable newDataTable;
-            sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', " +
-                "`MediDB`.`Drug`.`name` '药品名'," +
-                "`MediDB`.`Drug`.`approvalNumber` '批准文号'," +
-                "`MediDB`.`Drug`.`attendingFunctions` '功能主治'," +
-                "`MediDB`.`Drug`.`taboo` '禁忌'," +
-                "`MediDB`.`Drug`.`adverseReaction` '不良反应'," +
-                "`MediDB`.`Drug`.`expirationDate` '保质期/月'," +
-                "`MediDB`.`Drug`.`usage` '服用方法'," +
-                "`MediDB`.`Drug`.`unitPrice` '单价'" +
-                "from `MediDB`.`Drug` " +
-                "where `MediDB`.`Drug`.`isDelete`='否';";
+            if ((name==""&&id==-1)||(name!=""&&id!=-1))
+            {
+                sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                    "`MediDB`.`Drug`.`name` '药品名',"+
+                    "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                    "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                    "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                    "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                    "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                    "`MediDB`.`Drug`.`usage` '服用方法',"+
+                    "`MediDB`.`Drug`.`unitPrice` '单价'"+
+                    "from `MediDB`.`Drug` "+
+                    "where `MediDB`.`Drug`.`isDelete`='否';";
+            }
+            else if(id==-1&&name!="")
+            {
+                sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                    "`MediDB`.`Drug`.`name` '药品名',"+
+                    "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                    "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                    "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                    "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                    "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                    "`MediDB`.`Drug`.`usage` '服用方法',"+
+                    "`MediDB`.`Drug`.`unitPrice` '单价'"+
+                    "from `MediDB`.`Drug` "+
+                    "where `MediDB`.`Drug`.`isDelete`='否'" +
+                    "and instr(`MediDB`.`Drug`.`name`,'"+name+"');";
+            }
+            else if (id!=-1&&name=="")
+            {
+                sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                    "`MediDB`.`Drug`.`name` '药品名',"+
+                    "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                    "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                    "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                    "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                    "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                    "`MediDB`.`Drug`.`usage` '服用方法',"+
+                    "`MediDB`.`Drug`.`unitPrice` '单价'"+
+                    "from `MediDB`.`Drug` "+
+                    "where `MediDB`.`Drug`.`isDelete`='否'"+
+                    "and `MediDB`.`Drug`.`Drug_id`="+id+";";
+            }
             adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
             newDataTable=new DataTable();
             adapter.Fill(newDataTable);
+            newDataTable.Rows[0].ToString();
             return newDataTable;
+        }
+        static public void deleteDrug(List<int> drugIds)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            string ids = "";
+            for (int i = 0; i<drugIds.Count; i++)
+            {
+                ids+=drugIds[i].ToString();
+                if (drugIds.Count!=i+1)
+                {
+                    ids+=',';
+                }
+            }
+            sql="update `MediDB`.`Drug` " +
+                "set `MediDB`.`Drug`.`isDelete`='是' " +
+                "where `MediDB`.`Drug`.`Drug_id` in " +
+                "("+ids+")";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
+        }
+        static public void addDrug(string name,string approvalNumber,string attendingFunctions,string taboo,string adverseReaction,int expirationDate,string usage,double unitPrice)
+        {
+            try
+            {
+                string sql = "";
+                MySqlCommand cmd;
+                sql="insert into `MediDB`.`Drug` "+
+                    "(`name`,`approvalNumber`,`attendingFunctions`,`taboo`,`adverseReaction`,`expirationDate`,`usage`,`unitPrice`) "+
+                    "values"+
+                    "('"+name+"','"+approvalNumber+"','"+attendingFunctions+"','"+taboo+"','"+adverseReaction+"',"+expirationDate+",'"+usage+"',"+unitPrice+");";
+                cmd=new MySqlCommand(sql, Program.user.getConnect());
+                cmd.ExecuteNonQuery();
+            }
+            catch
+            { }
         }
         /*
 select `a`.`Drug_id` '药品编号',
