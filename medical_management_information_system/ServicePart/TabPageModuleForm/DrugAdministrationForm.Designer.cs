@@ -59,6 +59,7 @@
             this.printingBtn.TabIndex = 1;
             this.printingBtn.Text = "打印";
             this.printingBtn.UseVisualStyleBackColor = true;
+            this.printingBtn.Click += new System.EventHandler(this.printingBtn_Click);
             // 
             // generatePurchaseOrderBtn
             // 

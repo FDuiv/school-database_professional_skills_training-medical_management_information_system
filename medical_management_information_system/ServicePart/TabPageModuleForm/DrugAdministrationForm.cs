@@ -114,5 +114,17 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             }
         }
 
+        private void printingBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter= "xlsx文件(*.xlsx)|*.xlsx";
+            saveFileDialog.RestoreDirectory=false;
+            saveFileDialog.FileName="药品信息.xlsx";
+            if (saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                ExcelReport.Export(this.dataGridView, saveFileDialog.FileName.Split('\\')[saveFileDialog.FileName.Split('\\').Length-1].Split('.')[0], saveFileDialog.FileName);
+            }
+            
+        }
     }
 }

@@ -38,9 +38,6 @@ namespace medical_management_information_system
                     Program.user.Close();
                 }
             } while (ServiceForm.isLogoff);
-
-
-
         }
         
     }
