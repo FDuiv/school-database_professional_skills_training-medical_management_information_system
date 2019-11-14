@@ -22,10 +22,10 @@ namespace medical_management_information_system
             if (Program.user.getConnect()==null)
             {
                 if (ConnectForm.ip!=""&&ConnectForm.port!=""&&ConnectForm.user!=""&&ConnectForm.password!="")
-                {
-                    Program.user.Close();
+                { 
                     if (Program.user.Connect(ConnectForm.ip, ConnectForm.port, ConnectForm.user, ConnectForm.password)!="Connection successful")
                     {
+                        Program.user.Close();
                         MessageBox.Show("无法连接服务器！", "警告");
                         return;
                     }

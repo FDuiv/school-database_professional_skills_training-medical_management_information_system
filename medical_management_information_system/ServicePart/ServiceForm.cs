@@ -23,6 +23,7 @@ namespace medical_management_information_system.ServicePart
         }
         private void ServiceForm_Load(object sender, EventArgs e)
         {
+            ServiceForm.isLogoff=false;
             Dictionary<string, bool> jurisdictions = Program.user.getJurisdictions();
             foreach (KeyValuePair<string, bool> kvp in jurisdictions)
             {

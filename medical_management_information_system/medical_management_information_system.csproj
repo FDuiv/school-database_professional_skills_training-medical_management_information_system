@@ -75,11 +75,29 @@
       <DependentUpon>SiginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InitPart\InitCode\User.cs" />
-    <Compile Include="ServicePart\OtherForm\AddDrugForm.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\AddDistributorDrugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServicePart\OtherForm\AddDrugForm.Designer.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\AddDistributorDrugForm.Designer.cs">
+      <DependentUpon>AddDistributorDrugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\AddDrugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\AddDrugForm.Designer.cs">
       <DependentUpon>AddDrugForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\AddPharmaceuticalForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\AddPharmaceuticalForm.Designer.cs">
+      <DependentUpon>AddPharmaceuticalForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\EditDealerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\EditDealerForm.Designer.cs">
+      <DependentUpon>EditDealerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ServicePart\ServiceForm.cs">
       <SubType>Form</SubType>
@@ -87,28 +105,28 @@
     <Compile Include="ServicePart\ServiceForm.Designer.cs">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\DealerManagementForm.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\DealerManagementForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\DealerManagementForm.Designer.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DealerManagement\DealerManagementForm.Designer.cs">
       <DependentUpon>DealerManagementForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\DrugAdministrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.Designer.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\DrugAdministrationForm.Designer.cs">
       <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrder\PurchaseOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.Designer.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrder\PurchaseOrderForm.Designer.cs">
       <DependentUpon>PurchaseOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\RequisitionForm.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\Requisition\RequisitionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServicePart\TabPageModuleForm\RequisitionForm.Designer.cs">
+    <Compile Include="ServicePart\TabPageModuleForm\Requisition\RequisitionForm.Designer.cs">
       <DependentUpon>RequisitionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ServicePart\utils\ExcelReport.cs" />
@@ -133,22 +151,31 @@
     <EmbeddedResource Include="InitPart\InitForm\SiginForm.resx">
       <DependentUpon>SiginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\OtherForm\AddDrugForm.resx">
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagement\AddDistributorDrugForm.resx">
+      <DependentUpon>AddDistributorDrugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministration\AddDrugForm.resx">
       <DependentUpon>AddDrugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagement\AddPharmaceuticalForm.resx">
+      <DependentUpon>AddPharmaceuticalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagement\EditDealerForm.resx">
+      <DependentUpon>EditDealerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\ServiceForm.resx">
       <DependentUpon>ServiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagementForm.resx">
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DealerManagement\DealerManagementForm.resx">
       <DependentUpon>DealerManagementForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministrationForm.resx">
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministration\DrugAdministrationForm.resx">
       <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\TabPageModuleForm\PurchaseOrderForm.resx">
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\PurchaseOrder\PurchaseOrderForm.resx">
       <DependentUpon>PurchaseOrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServicePart\TabPageModuleForm\RequisitionForm.resx">
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\Requisition\RequisitionForm.resx">
       <DependentUpon>RequisitionForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -166,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DerivedComponents\" />
+    <Folder Include="ServicePart\OtherForm\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

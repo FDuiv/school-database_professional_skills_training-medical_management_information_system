@@ -38,6 +38,7 @@
             this.Name = "RequisitionForm";
             this.Text = "RequisitionForm";
             this.Load += new System.EventHandler(this.RequisitionForm_Load);
+            this.SizeChanged += new System.EventHandler(this.RequisitionForm_SizeChanged);
             this.ResumeLayout(false);
 
         }

@@ -29,10 +29,15 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 
         private void DrugAdministrationForm_SizeChanged(object sender, EventArgs e)
         {
+            if (this.Parent!=null)
+            {
+                this.Size=this.Parent.Size;
+            }
             this.printingBtn.Location=new Point(this.Size.Width-this.printingBtn.Size.Width-12, this.printingBtn.Location.Y);
             this.flashBtn.Location=new Point(this.printingBtn.Location.X-this.printingBtn.Size.Width-6, this.flashBtn.Location.Y);
             this.generatePurchaseOrderBtn.Location=new Point(this.flashBtn.Location.X-this.flashBtn.Size.Width-6,this.generatePurchaseOrderBtn.Location.Y);
             this.dataGridView.Size=new Size(this.Size.Width-22, this.Size.Height-52);
+            
         }
 
         private void addBtn_Click(object sender, EventArgs e)

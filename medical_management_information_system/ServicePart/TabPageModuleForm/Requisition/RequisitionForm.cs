@@ -10,21 +10,21 @@ using System.Windows.Forms;
 
 namespace medical_management_information_system.ServicePart.TabPageModuleForm
 {
-    public partial class DealerManagementForm : Form
+    public partial class RequisitionForm : Form
     {
-        public DealerManagementForm()
+        public RequisitionForm()
         {
             InitializeComponent();
         }
 
-        public void DealerManagementForm_Load(object sender, EventArgs e)
+        public void RequisitionForm_Load(object sender, EventArgs e)
         {
-            this.DealerManagementForm_SizeChanged(sender, e);
+            this.RequisitionForm_SizeChanged(sender, e);
         }
 
-        private void DealerManagementForm_SizeChanged(object sender, EventArgs e)
+        private void RequisitionForm_SizeChanged(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

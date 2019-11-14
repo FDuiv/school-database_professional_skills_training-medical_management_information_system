@@ -19,16 +19,16 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 
         public void PurchaseOrderForm_Load(object sender, EventArgs e)
         {
-            if(this.Parent!=null)
-            {
-                this.Size=this.Parent.Size;
-            }
+
             this.PurchaseOrderForm_SizeChanged(sender, e);
             this.tabControl_SelectedIndexChanged(sender, e);
         }
         private void PurchaseOrderForm_SizeChanged(object sender, EventArgs e)
         {
-            
+            if (this.Parent!=null)
+            {
+                this.Size=this.Parent.Size;
+            }
             this.printingBtn.Location=new Point(this.Size.Width-this.printingBtn.Size.Width-12, this.tabControl.Location.Y-7);
             this.tabControl.Size=new Size(221, this.Size.Height-26);
             this.sortByTimeTreeView.Size=new Size(this.tabControl.SelectedTab.Size.Width-13, this.tabControl.SelectedTab.Size.Height-13);
