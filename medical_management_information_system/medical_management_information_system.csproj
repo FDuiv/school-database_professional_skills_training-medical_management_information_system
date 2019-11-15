@@ -117,6 +117,12 @@
     <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\DrugAdministrationForm.Designer.cs">
       <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\PurchasingDrugsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\DrugAdministration\PurchasingDrugsForm.Designer.cs">
+      <DependentUpon>PurchasingDrugsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicePart\TabPageModuleForm\PurchaseOrder\PurchaseOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministration\DrugAdministrationForm.resx">
       <DependentUpon>DrugAdministrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\DrugAdministration\PurchasingDrugsForm.resx">
+      <DependentUpon>PurchasingDrugsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\TabPageModuleForm\PurchaseOrder\PurchaseOrderForm.resx">
       <DependentUpon>PurchaseOrderForm.cs</DependentUpon>

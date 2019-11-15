@@ -15,16 +15,38 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
         public RequisitionForm()
         {
             InitializeComponent();
+            
         }
 
         public void RequisitionForm_Load(object sender, EventArgs e)
         {
             this.RequisitionForm_SizeChanged(sender, e);
+            this.treeView.Nodes.Clear();
+            string[] requisitionOrders = DButils.getRequisitionOrders();
+            for (int i = 0; i<requisitionOrders.Length; i++)
+            {
+                TreeNode node = new TreeNode(requisitionOrders[i]);
+                this.treeView.Nodes.Add(node);
+            }
         }
 
         private void RequisitionForm_SizeChanged(object sender, EventArgs e)
         {
-            
+            if (this.Parent!=null)
+            {
+                this.Size=this.Parent.Size;
+            }
+            this.treeView.Size=new Size(this.treeView.Size.Width, this.Size.Height-26);
+            this.flashBtn.Location=new Point(this.Size.Width-this.flashBtn.Size.Width-12,this.flashBtn.Location.Y);
+            this.dataGridView.Size=new Size(this.flashBtn.Location.X+this.flashBtn.Size.Width-this.dataGridView.Location.X,this.treeView.Location.Y+this.treeView.Size.Height-this.dataGridView.Location.Y);
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string[] temp=this.treeView.SelectedNode.Text.Split(' ');
+
+            int requisitionOrderId=DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
+            this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId);
         }
     }
 }

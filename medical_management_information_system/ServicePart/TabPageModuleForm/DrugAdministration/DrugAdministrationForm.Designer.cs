@@ -69,6 +69,7 @@
             this.generatePurchaseOrderBtn.TabIndex = 2;
             this.generatePurchaseOrderBtn.Text = "采购";
             this.generatePurchaseOrderBtn.UseVisualStyleBackColor = true;
+            this.generatePurchaseOrderBtn.Click += new System.EventHandler(this.generatePurchaseOrderBtn_Click);
             // 
             // addBtn
             // 

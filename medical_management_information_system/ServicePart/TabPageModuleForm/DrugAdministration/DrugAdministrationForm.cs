@@ -1,4 +1,5 @@
 ﻿using medical_management_information_system.ServicePart.OtherForm;
+using medical_management_information_system.ServicePart.TabPageModuleForm.DrugAdministration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -130,6 +131,11 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
                 ExcelReport.Export(this.dataGridView, saveFileDialog.FileName.Split('\\')[saveFileDialog.FileName.Split('\\').Length-1].Split('.')[0], saveFileDialog.FileName);
             }
             
+        }
+
+        private void generatePurchaseOrderBtn_Click(object sender, EventArgs e)
+        {
+            new PurchasingDrugsForm().ShowDialog();
         }
     }
 }

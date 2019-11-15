@@ -29,13 +29,14 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
                     node.Nodes.Add(distributorNames[j]);
                 }
             }
+            this.deleteBtn.Enabled=false;
+            this.printingBtn.Enabled=false;
         }
 
         public void DealerManagementForm_Load(object sender, EventArgs e)
         {
             this.DealerManagementForm_SizeChanged(sender, e);
-            this.deleteBtn.Enabled=false;
-            this.printingBtn.Enabled=false;
+
 
         }
 
@@ -66,7 +67,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
         private void addBtn_Click(object sender, EventArgs e)
         {
             (new AddPharmaceuticalForm()).ShowDialog();
-            this.flashBtn_Click(sender, e);
+            this.DealerManagementForm_Load(sender, e);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
@@ -93,6 +94,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 
         private void flashBtn_Click(object sender, EventArgs e)
         {
+            this.DealerManagementForm_Load(sender, e);
             this.treeView.Nodes.Clear();
             string[] companyNames = DButils.getPharmaceuticalDistributorCompanys();
             for (int i = 0; i<companyNames.Length; i++)
@@ -105,8 +107,8 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
                     node.Nodes.Add(distributorNames[j]);
                 }
             }
-            this.DealerManagementForm_Load(sender,e);
-
+            this.deleteBtn.Enabled=false;
+            this.printingBtn.Enabled=false;
         }
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)

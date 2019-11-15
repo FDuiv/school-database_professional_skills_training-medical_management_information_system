@@ -78,6 +78,8 @@ namespace medical_management_information_system
             rdr.Close();
             return departmentId;
         }
+
+
         static public int getJurisdictionId(string name)
         {
             string sql = "select `MediDB`.`Jurisdiction`.`Jurisdiction_id` " +
@@ -485,7 +487,6 @@ namespace medical_management_information_system
         }
         static public DataTable getDistributorDrugNeed(int distributorId, string drugName = "")
         {
-
             string sql = "";
             MySqlCommand cmd;
             MySqlDataReader rdr;
@@ -545,7 +546,6 @@ namespace medical_management_information_system
             {
                 string sql = "";
                 MySqlCommand cmd;
-                MySqlDataReader rdr;
                 sql="update `MediDB`.`DistributorDrug` "+
                     "set `MediDB`.`DistributorDrug`.`isDelete`='是' "+
                     "where `MediDB`.`DistributorDrug`.`DistributorDrug_id`="+distributorDrugId+";";
@@ -553,6 +553,190 @@ namespace medical_management_information_system
                 cmd.ExecuteNonQuery();
             }
             catch { }
+        }
+        static public List<string> getAllDrugId()
+        {
+            List<string> allDrugs = new List<string>();
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            sql="select `MediDB`.`Drug`.`Drug_id` " +
+                "from `MediDB`.`Drug`" +
+                "where `MediDB`.`Drug`.`isDelete`='否';";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                allDrugs.Add(rdr["Drug_id"].ToString());
+            }
+            rdr.Close();
+            return allDrugs;
+        }
+        static public DataTable getPurchaseDrug(List<string> drugId,string drugName,bool isNot)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            MySqlDataAdapter adapter;
+            DataTable newDataTable;
+            if (drugName=="")
+            {
+                if (isNot)
+                {
+                    sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                                "`MediDB`.`Drug`.`name` '药品名',"+
+                                "`MediDB`.`Drug`.`unitPrice` '单价',"+
+                                "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                                "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                                "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                                "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                                "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                                "`MediDB`.`Drug`.`usage` '服用方法'"+
+                                "from `MediDB`.`Drug` "+
+                                "where `MediDB`.`Drug`.`isDelete`='否'"+
+                                "and `MediDB`.`Drug`.`Drug_id` not in ("+string.Join(",", drugId.ToArray())+");";
+                }
+                else
+                {
+                    sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                             "`MediDB`.`Drug`.`name` '药品名',"+
+                             "`MediDB`.`Drug`.`unitPrice` '单价',"+
+                             "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                             "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                             "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                             "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                             "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                             "`MediDB`.`Drug`.`usage` '服用方法'"+
+                             "from `MediDB`.`Drug` "+
+                             "where `MediDB`.`Drug`.`isDelete`='否'"+
+                             "and `MediDB`.`Drug`.`Drug_id` in ("+string.Join(",", drugId.ToArray())+");";
+                }
+            }
+            else
+            {
+                if (isNot)
+                {
+                    sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                                "`MediDB`.`Drug`.`name` '药品名',"+
+                                "`MediDB`.`Drug`.`unitPrice` '单价',"+
+                                "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                                "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                                "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                                "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                                "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                                "`MediDB`.`Drug`.`usage` '服用方法'"+
+                                "from `MediDB`.`Drug` "+
+                                "where `MediDB`.`Drug`.`isDelete`='否'"+
+                                "and `MediDB`.`Drug`.`Drug_id` not in ("+string.Join(",", drugId.ToArray())+")"+
+                                "and instr(`MediDB`.`Drug`.`name`,'"+drugName+"');";
+
+                }
+                else
+                {
+                    sql="select `MediDB`.`Drug`.`Drug_id` '药品编号', "+
+                             "`MediDB`.`Drug`.`name` '药品名',"+
+                             "`MediDB`.`Drug`.`unitPrice` '单价',"+
+                             "`MediDB`.`Drug`.`approvalNumber` '批准文号',"+
+                             "`MediDB`.`Drug`.`attendingFunctions` '功能主治',"+
+                             "`MediDB`.`Drug`.`taboo` '禁忌',"+
+                             "`MediDB`.`Drug`.`adverseReaction` '不良反应',"+
+                             "`MediDB`.`Drug`.`expirationDate` '保质期/月',"+
+                             "`MediDB`.`Drug`.`usage` '服用方法'"+
+                             "from `MediDB`.`Drug` "+
+                             "where `MediDB`.`Drug`.`isDelete`='否'"+
+                             "and `MediDB`.`Drug`.`Drug_id` in ("+string.Join(",", drugId.ToArray())+")"+
+                             "and instr(`MediDB`.`Drug`.`name`,'"+drugName+"');";
+                }
+            }
+            adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
+            newDataTable=new DataTable();
+            adapter.Fill(newDataTable);
+            return newDataTable;
+        }
+
+        static public void addPurchaseOrders(List<string[]> purchaseDrugIds)
+        {
+            try
+            {
+                string sql = "";
+                MySqlCommand cmd;
+                MySqlDataReader rdr;
+                sql="insert into `MediDB`.`PurchaseOrders` " +
+                    "(`purchaseDate`) " +
+                    "values" +
+                    "(localtime());";
+                cmd=new MySqlCommand(sql, Program.user.getConnect());
+                cmd.ExecuteNonQuery();
+                sql="select LAST_INSERT_ID() as PurchaseOrders_id;";
+                cmd=new MySqlCommand(sql, Program.user.getConnect());
+                rdr=cmd.ExecuteReader();
+                rdr.Read();
+                int purchaseOrdersId = int.Parse(rdr["PurchaseOrders_id"].ToString());
+                rdr.Close();
+                sql="";
+                for (int i = 0; i<purchaseDrugIds.Count; i++)
+                {
+                    sql+="insert into `MediDB`.`PurchasingList` " +
+                        "(`PurchaseOrders_id`,`Drug_id`,`PurchasingNum`) "+
+                        "values" +
+                        "("+purchaseOrdersId+","+purchaseDrugIds[i][0]+","+purchaseDrugIds[i][1]+");";
+                }
+               
+                cmd=new MySqlCommand(sql, Program.user.getConnect());
+                cmd.ExecuteNonQuery();
+            }
+            catch { }
+        }
+        static public string[] getRequisitionOrders()
+        {
+            List<string> requisitionOrders = new List<string>();
+            string sql = "select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
+                "from `MediDB`.`PurchaseOrders` "+
+                "where `MediDB`.`PurchaseOrders`.`isComplete`=0 " +
+                "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc;";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                requisitionOrders.Add(rdr["purchaseDate"].ToString());
+            }
+            rdr.Close();
+            return requisitionOrders.ToArray();
+        }
+        static public int getRequisitionOrderId(string date)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` " +
+                "from `MediDB`.`PurchaseOrders` " +
+                "where `MediDB`.`PurchaseOrders`.`purchaseDate`='"+date+"';";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int requisitionOrderId = int.Parse(rdr["PurchaseOrders_id"].ToString());
+            rdr.Close();
+            return requisitionOrderId;
+        }
+        static public DataTable getPurchasingList(int requisitionOrderId)
+        {
+            string sql = "";
+            MySqlDataAdapter adapter;
+            DataTable newDataTable;
+            sql="select b.`name` as '药名'," +
+                "a.`PurchasingNum` as '采购数量'" +
+                "from `MediDB`.`PurchasingList` as a, `MediDB`.`Drug` as b " +
+                "where a.`Drug_id`=b.`Drug_id`" +
+                "and a.`isDelete`='否'" +
+                "and a.`PharmaceuticalDistributor_id` is null "+
+                "and a.`PurchaseOrders_id`="+requisitionOrderId+";";
+            adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
+            newDataTable=new DataTable();
+            adapter.Fill(newDataTable);
+            return newDataTable;
+
         }
         /*
 select `a`.`Drug_id` '药品编号',
