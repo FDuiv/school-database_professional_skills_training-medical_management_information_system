@@ -45,8 +45,8 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string[] temp=this.treeView.SelectedNode.Text.Split(' ');
-            int requisitionOrderId=DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
-            this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId);
+            int requisitionOrderId=DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
+            this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,false);
         }
 
         private void flashBtn_Click(object sender, EventArgs e)
@@ -54,8 +54,8 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             if (this.treeView.SelectedNode!=null)
             {
                 string[] temp = this.treeView.SelectedNode.Text.Split(' ');
-                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
-                this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId);
+                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
+                this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,false);
             }
         }
 
@@ -66,7 +66,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             if (this.dataGridView.Rows.Count==1)
             {
                 string[] temp = this.treeView.SelectedNode.Text.Split(' ');
-                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
+                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
                 DButils.completePurchase(requisitionOrderId);
                 this.RequisitionForm_Load(sender, e);
                 this.dataGridView.DataSource=null; 

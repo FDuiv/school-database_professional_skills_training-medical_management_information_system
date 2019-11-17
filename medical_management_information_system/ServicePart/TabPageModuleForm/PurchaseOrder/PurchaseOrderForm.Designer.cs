@@ -69,6 +69,7 @@
             this.sortByTimeTreeView.Name = "sortByTimeTreeView";
             this.sortByTimeTreeView.Size = new System.Drawing.Size(201, 399);
             this.sortByTimeTreeView.TabIndex = 0;
+            this.sortByTimeTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sortByTimeTreeView_AfterSelect);
             // 
             // sortByCompletionTabPage
             // 
@@ -85,8 +86,9 @@
             // 
             this.sortByCompletionTreeView.Location = new System.Drawing.Point(6, 6);
             this.sortByCompletionTreeView.Name = "sortByCompletionTreeView";
-            this.sortByCompletionTreeView.Size = new System.Drawing.Size(180, 388);
+            this.sortByCompletionTreeView.Size = new System.Drawing.Size(201, 388);
             this.sortByCompletionTreeView.TabIndex = 1;
+            this.sortByCompletionTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.sortByCompletionTreeView_AfterSelect);
             // 
             // dataGridView
             // 

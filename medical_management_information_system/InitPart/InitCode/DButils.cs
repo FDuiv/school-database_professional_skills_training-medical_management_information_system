@@ -705,14 +705,23 @@ namespace medical_management_information_system
             rdr.Close();
             return requisitionOrders.ToArray();
         }
-        static public int getRequisitionOrderId(string date)
+        static public int getRequisitionOrderId(string date,bool isPurchaseDate)
         {
             string sql = "";
             MySqlCommand cmd;
             MySqlDataReader rdr;
-            sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` " +
-                "from `MediDB`.`PurchaseOrders` " +
-                "where `MediDB`.`PurchaseOrders`.`purchaseDate`='"+date+"';";
+            if (isPurchaseDate)
+            {
+                sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` "+
+                    "from `MediDB`.`PurchaseOrders` "+
+                    "where `MediDB`.`PurchaseOrders`.`purchaseDate`='"+date+"';";
+            }
+            else
+            {
+                sql="select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id` "+
+                    "from `MediDB`.`PurchaseOrders` "+
+                    "where `MediDB`.`PurchaseOrders`.`completDate`='"+date+"';";
+            }
             cmd=new MySqlCommand(sql, Program.user.getConnect());
             rdr=cmd.ExecuteReader();
             rdr.Read();
@@ -720,20 +729,37 @@ namespace medical_management_information_system
             rdr.Close();
             return requisitionOrderId;
         }
-        static public DataTable getPurchasingList(int requisitionOrderId)
+        static public DataTable getPurchasingList(int requisitionOrderId,bool isComplete)
         {
             string sql = "";
             MySqlDataAdapter adapter;
             DataTable newDataTable;
-            sql="select `a`.`PurchasingList_id` as '编号',"+
-                "`b`.`Drug_id` as '药品编号'," +
-                "b.`name` as '药名'," +
-                "a.`PurchasingNum` as '采购数量'" +
-                "from `MediDB`.`PurchasingList` as a, `MediDB`.`Drug` as b " +
-                "where a.`Drug_id`=b.`Drug_id`" +
-                "and a.`isDelete`='否'" +
-                "and a.`PharmaceuticalDistributor_id` is null "+
-                "and a.`PurchaseOrders_id`="+requisitionOrderId+";";
+            if (isComplete)
+            {
+                sql="select b.`name` as '药名',"+
+                   "c.`name` as '提供商',"+
+                   "a.`PurchasingNum` as '采购数量'"+
+                   "from `MediDB`.`PurchasingList` as a, "+
+                   "`MediDB`.`Drug` as b, "+
+                   "`MediDB`.PharmaceuticalDistributor as c "+
+                   "where a.`Drug_id`=b.`Drug_id`"+
+                   "and a.`PharmaceuticalDistributor_id`=c.`PharmaceuticalDistributor_id`"+
+                   "and a.`isDelete`='否'"+
+                   "and a.`PurchaseOrders_id`="+requisitionOrderId+";";
+            }
+            else
+            {
+                sql="select `a`.`PurchasingList_id` as '编号',"+
+                       "`b`.`Drug_id` as '药品编号',"+
+                       "b.`name` as '药名',"+
+                       "a.`PurchasingNum` as '采购数量'"+
+                       "from `MediDB`.`PurchasingList` as a, `MediDB`.`Drug` as b "+
+                       "where a.`Drug_id`=b.`Drug_id`"+
+                       "and a.`isDelete`='否'"+
+                       "and a.`PharmaceuticalDistributor_id` is null "+
+                       "and a.`PurchaseOrders_id`="+requisitionOrderId+";";
+               
+            }
             adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
             newDataTable=new DataTable();
             adapter.Fill(newDataTable);
@@ -791,7 +817,8 @@ namespace medical_management_information_system
             MySqlCommand cmd;
             MySqlDataReader rdr;
             string sql = "update `MediDB`.`PurchaseOrders` "+
-                "set `MediDB`.`PurchaseOrders`.`isComplete`=1 "+
+                "set `MediDB`.`PurchaseOrders`.`isComplete`=1, " +
+                "`MediDB`.`PurchaseOrders`.`completDate`= localtime() "+
                 "where `MediDB`.`PurchaseOrders`.`PurchaseOrders_id`="+purchaseOrdersId+";";
             cmd=new MySqlCommand(sql, Program.user.getConnect());
             cmd.ExecuteNonQuery();

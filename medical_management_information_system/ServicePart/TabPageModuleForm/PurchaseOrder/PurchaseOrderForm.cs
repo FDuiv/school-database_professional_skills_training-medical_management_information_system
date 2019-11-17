@@ -12,6 +12,8 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 {
     public partial class PurchaseOrderForm : Form
     {
+        private bool isCompleteFlag = false;
+        private string tempDate = "";
         public PurchaseOrderForm()
         {
             InitializeComponent();
@@ -61,7 +63,43 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 
         private void printingBtn_Click(object sender, EventArgs e)
         {
+            if (this.dataGridView.DataSource==null)
+            {
+                return;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter="xlsx文件(*.xlsx)|*.xlsx";
+            saveFileDialog.RestoreDirectory=false;
+            if (this.isCompleteFlag)
+            {
+                saveFileDialog.FileName="完成日期_"+this.tempDate.Replace("/","-").Replace(":", "-").Replace(" ", "_")+"_采购单.xlsx";
+            }
+            else
+            {
+                saveFileDialog.FileName="提交日期_"+this.tempDate.Replace("/", "-").Replace(":", "-").Replace(" ", "_")+"_采购单.xlsx";
+            }
+            if (saveFileDialog.ShowDialog()==DialogResult.OK)
+            {
+                ExcelReport.Export(this.dataGridView, saveFileDialog.FileName.Split('\\')[saveFileDialog.FileName.Split('\\').Length-1].Split('.')[0], saveFileDialog.FileName);
+            }
+        }
 
+        private void sortByTimeTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string[] temp = this.sortByTimeTreeView.SelectedNode.Text.Split(' ');
+            int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
+            this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,true);
+            this.tempDate=this.sortByTimeTreeView.SelectedNode.Text;
+            this.isCompleteFlag=false;
+        }
+
+        private void sortByCompletionTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string[] temp = this.sortByCompletionTreeView.SelectedNode.Text.Split(' ');
+            int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],false);
+            this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,true);
+            this.tempDate=this.sortByCompletionTreeView.SelectedNode.Text;
+            this.isCompleteFlag=true;
         }
     }
 }
