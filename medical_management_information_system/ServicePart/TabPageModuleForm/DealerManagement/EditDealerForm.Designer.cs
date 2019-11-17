@@ -106,6 +106,7 @@
             this.Controls.Add(this.downComboBox);
             this.Controls.Add(this.drugDataGridView);
             this.Controls.Add(this.distributorDrugDataGridView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "EditDealerForm";
             this.Text = "EditDealerForm";
             this.Load += new System.EventHandler(this.EditDealerForm_Load);

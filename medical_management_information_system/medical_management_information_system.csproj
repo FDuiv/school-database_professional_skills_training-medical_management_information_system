@@ -135,6 +135,12 @@
     <Compile Include="ServicePart\TabPageModuleForm\Requisition\RequisitionForm.Designer.cs">
       <DependentUpon>RequisitionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\Requisition\SelectPharmaceutical.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServicePart\TabPageModuleForm\Requisition\SelectPharmaceutical.Designer.cs">
+      <DependentUpon>SelectPharmaceutical.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServicePart\utils\ExcelReport.cs" />
     <EmbeddedResource Include="InitPart\InitForm\BindForm.resx">
       <DependentUpon>BindForm.cs</DependentUpon>
@@ -186,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ServicePart\TabPageModuleForm\Requisition\RequisitionForm.resx">
       <DependentUpon>RequisitionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServicePart\TabPageModuleForm\Requisition\SelectPharmaceutical.resx">
+      <DependentUpon>SelectPharmaceutical.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -141,6 +141,7 @@
             this.Controls.Add(this.upDataGridView);
             this.Controls.Add(this.upComboBox);
             this.Controls.Add(this.upLab);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PurchasingDrugsForm";

@@ -89,6 +89,7 @@
             this.Controls.Add(this.distributorTextBox);
             this.Controls.Add(this.DistributorLab);
             this.Controls.Add(this.companyNameLab);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddPharmaceuticalForm";
             this.Text = "AddPharmaceuticalForm";
             this.Load += new System.EventHandler(this.AddPharmaceuticalForm_Load);

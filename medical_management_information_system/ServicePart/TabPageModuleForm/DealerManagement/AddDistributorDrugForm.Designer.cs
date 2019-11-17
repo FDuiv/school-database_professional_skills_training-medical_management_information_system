@@ -89,6 +89,7 @@
             this.Controls.Add(this.unitPriceTextBox);
             this.Controls.Add(this.unitPriceLab);
             this.Controls.Add(this.inventoryLab);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddDistributorDrugForm";
             this.Text = "AddDistributorDrugForm";
             this.ResumeLayout(false);

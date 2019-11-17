@@ -1,4 +1,5 @@
-﻿using System;
+﻿using medical_management_information_system.ServicePart.TabPageModuleForm.Requisition;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,9 +45,33 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string[] temp=this.treeView.SelectedNode.Text.Split(' ');
-
             int requisitionOrderId=DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
             this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId);
+        }
+
+        private void flashBtn_Click(object sender, EventArgs e)
+        {
+            if (this.treeView.SelectedNode!=null)
+            {
+                string[] temp = this.treeView.SelectedNode.Text.Split(' ');
+                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
+                this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId);
+            }
+        }
+
+        private void dataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            new SelectPharmaceutical(int.Parse(this.dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString()), int.Parse(this.dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString())).ShowDialog();
+            this.flashBtn_Click(sender, e);
+            if (this.dataGridView.Rows.Count==1)
+            {
+                string[] temp = this.treeView.SelectedNode.Text.Split(' ');
+                int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2]);
+                DButils.completePurchase(requisitionOrderId);
+                this.RequisitionForm_Load(sender, e);
+                this.dataGridView.DataSource=null; 
+            }
+            
         }
     }
 }

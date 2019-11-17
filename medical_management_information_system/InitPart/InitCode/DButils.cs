@@ -725,7 +725,9 @@ namespace medical_management_information_system
             string sql = "";
             MySqlDataAdapter adapter;
             DataTable newDataTable;
-            sql="select b.`name` as '药名'," +
+            sql="select `a`.`PurchasingList_id` as '编号',"+
+                "`b`.`Drug_id` as '药品编号'," +
+                "b.`name` as '药名'," +
                 "a.`PurchasingNum` as '采购数量'" +
                 "from `MediDB`.`PurchasingList` as a, `MediDB`.`Drug` as b " +
                 "where a.`Drug_id`=b.`Drug_id`" +
@@ -736,7 +738,63 @@ namespace medical_management_information_system
             newDataTable=new DataTable();
             adapter.Fill(newDataTable);
             return newDataTable;
-
+        }
+        static public string[] getDistributorWithDrug(int drugId)
+        {
+            List<string> distributorNames = new List<string>();
+            string sql = "select `MediDB`.`PharmaceuticalDistributor`.`name` " +
+                "from `MediDB`.`PharmaceuticalDistributor`" +
+                "where `MediDB`.`PharmaceuticalDistributor`.`PharmaceuticalDistributor_id` in " +
+                "("+
+                "   select `MediDB`.`DistributorDrug`.`PharmaceuticalDistributor_id` " +
+                "   from `MediDB`.`DistributorDrug` " +
+                "   where `MediDB`.`DistributorDrug`.`Drug_id` = "+drugId+"" +
+                ");";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                distributorNames.Add(rdr["name"].ToString());
+            }
+            rdr.Close();
+            return distributorNames.ToArray();
+        }
+        static public void updateDistributorDrug(int purchasingListId,int pharmaceuticalDistributorId)
+        {
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            string sql= "update `MediDB`.`PurchasingList` " +
+                "set `MediDB`.`PurchasingList`.`PharmaceuticalDistributor_id`="+pharmaceuticalDistributorId+" " +
+                "where `MediDB`.`PurchasingList`.`PurchasingList_id`="+purchasingListId+";";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
+        }
+        static public int getDistributorId(string name)
+        {
+            string sql = "select `MediDB`.`PharmaceuticalDistributor`.`PharmaceuticalDistributor_id` "+
+                "from `MediDB`.`PharmaceuticalDistributor` " +
+                "where `MediDB`.`PharmaceuticalDistributor`.`name` ='"+name+"';";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int distributorId=int.Parse(rdr["PharmaceuticalDistributor_id"].ToString());
+            
+            rdr.Close();
+            return distributorId;
+        }
+        static public void completePurchase(int purchaseOrdersId)
+        {
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            string sql = "update `MediDB`.`PurchaseOrders` "+
+                "set `MediDB`.`PurchaseOrders`.`isComplete`=1 "+
+                "where `MediDB`.`PurchaseOrders`.`PurchaseOrders_id`="+purchaseOrdersId+";";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
         }
         /*
 select `a`.`Drug_id` '药品编号',

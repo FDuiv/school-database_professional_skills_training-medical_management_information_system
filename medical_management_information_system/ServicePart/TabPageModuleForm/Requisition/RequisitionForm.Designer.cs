@@ -50,6 +50,7 @@
             this.dataGridView.RowTemplate.Height = 23;
             this.dataGridView.Size = new System.Drawing.Size(554, 408);
             this.dataGridView.TabIndex = 1;
+            this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellDoubleClick);
             // 
             // flashBtn
             // 
@@ -59,6 +60,7 @@
             this.flashBtn.TabIndex = 2;
             this.flashBtn.Text = "刷新";
             this.flashBtn.UseVisualStyleBackColor = true;
+            this.flashBtn.Click += new System.EventHandler(this.flashBtn_Click);
             // 
             // RequisitionForm
             // 
