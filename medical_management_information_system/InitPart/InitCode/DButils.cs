@@ -823,32 +823,68 @@ namespace medical_management_information_system
             cmd=new MySqlCommand(sql, Program.user.getConnect());
             cmd.ExecuteNonQuery();
         }
-        /*
-select `a`.`Drug_id` '药品编号',
-`a`.`name` '药品名',
-`a`.`approvalNumber` '批准文号',
-`a`.`attendingFunctions` '功能主治',
-`a`.`taboo` '禁忌',
-`a`.`adverseReaction` '不良反应',
-`a`.`expirationDate` '保质期/月',
-`a`.`usage` '服用方法',
-`b`.`PurchasingNum` '采购数量',
-`b`.`unitPrice` '单价',
-`a`.`isDelete` '药品是否被删除'
-from `MediDB`.`Drug` as `a`,
-	(select `MediDB`.`PurchasingList`.`PurchasingList_id`, 
-    `MediDB`.`PurchasingList`.`Drug_id`,
-    `MediDB`.`PurchasingList`.`PurchasingNum`,
-    `MediDB`.`PurchasingList`.`unitPrice`
-	from `MediDB`.`PurchasingList` 
-	where `MediDB`.`PurchasingList`.`isDelete` = 0
-	and `MediDB`.`PurchasingList`.`PurchaseOrders_id` in 
-	(
-		select `MediDB`.`PurchaseOrders`.`PurchaseOrders_id`
-		from `MediDB`.`PurchaseOrders`
-		where `MediDB`.`PurchaseOrders`.`purchaseDate`='2019-11-05 18:33:30'
-	)) as `b`
-where `a`.`Drug_id`= `b`.`Drug_id`;
-         */
+        static public int addClient(string name, string gender, string birthDay, string identificationNumber,List<string> addrs, List<string> phones)
+        {
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            string sql = "insert into `MediDB`.`Client` " +
+                "(`name`,`gender`,`birthDay`,`identificationNumber`)"+
+                "values" +
+                "('"+name+"','"+gender+"','"+birthDay+"','"+identificationNumber+"');";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
+
+            sql="select LAST_INSERT_ID() as Client_id;";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int clientId = int.Parse(rdr["Client_id"].ToString());
+            rdr.Close();
+
+            sql="";
+            for (int i = 0; i<addrs.Count; i++)
+            {
+                sql+="insert into `MediDB`.`ClientAddr` "+
+                    "(`Client_id`,`addr`) "+
+                    "values "+
+                    "("+clientId+",'"+addrs[i]+"'); ";
+            }
+            for (int i = 0; i<phones.Count; i++)
+            {
+                sql+="insert into `MediDB`.`ClientPhone` "+
+                    "(`Client_id`,`phoneNum`) "+
+                    "values "+
+                    "("+clientId+","+phones[i]+"); ";
+            }
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
+            return clientId;
+        }
+        static public float getDrugUnitPrice(int drugId)
+        {
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            string sql = "";
+            sql="select `MediDB`.`Drug`.`unitPrice` " +
+                "from `MediDB`.`Drug` " +
+                "where `MediDB`.`Drug`.`Drug_id`="+drugId+";";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            float unitPrice = float.Parse(rdr["unitPrice"].ToString());
+            rdr.Close();
+            return unitPrice;
+        }
+        static public void addShoppingList(int shoppingOrdersId, int drugId, int shoppingNum, float unitPrice)
+        {
+            MySqlCommand cmd;
+
+            string sql = "insert into `MediDB`.`ShoppingList` " +
+                "(`ShoppingOrders_id`,`Drug_id`,`ShoppingNum`,`unitPrice`)"+
+                "values" +
+                "("+shoppingOrdersId+","+drugId+","+shoppingNum+","+unitPrice+");";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            cmd.ExecuteNonQuery();
+        }
     }
 }

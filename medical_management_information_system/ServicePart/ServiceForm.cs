@@ -1,5 +1,6 @@
 ﻿
 using medical_management_information_system.ServicePart.TabPageModuleForm;
+using medical_management_information_system.ServicePart.TabPageModuleForm.Shopping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -101,22 +102,22 @@ namespace medical_management_information_system.ServicePart
                     DrugAdministrationForm drugAdministrationForm = new DrugAdministrationForm();
                     this.autoSizeEvent+=drugAdministrationForm.DrugAdministrationForm_Load;
                     return drugAdministrationForm;
-                    break;
                 case "经销商管理页表":
                     DealerManagementForm dealerManagementForm = new DealerManagementForm();
                     this.autoSizeEvent+=dealerManagementForm.DealerManagementForm_Load;
                     return dealerManagementForm;
-                    break;
                 case "采购订单页表":
                     PurchaseOrderForm purchaseOrderForm = new PurchaseOrderForm();
                     this.autoSizeEvent+=purchaseOrderForm.PurchaseOrderForm_Load;
                     return purchaseOrderForm; 
-                    break;
                 case "请购单页表":
                     RequisitionForm requisitionForm = new RequisitionForm();
                     this.autoSizeEvent+=requisitionForm.RequisitionForm_Load;
                     return requisitionForm;
-                    break;
+                case "购物窗口页表":
+                    ShoppingForm shoppingForm = new ShoppingForm();
+                    this.autoSizeEvent+=shoppingForm.ShoppingForm_Load;
+                    return shoppingForm;
             }
             return null;
         }

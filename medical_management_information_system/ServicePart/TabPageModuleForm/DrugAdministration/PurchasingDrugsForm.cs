@@ -64,7 +64,6 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm.Dr
                 if (this.purchaseDrugIdNums[i][0]==this.upDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString())
                 {
                     this.purchaseDrugIdNums.Remove(this.purchaseDrugIdNums[i]);
-
                 }
             }
             this.upComboBox_TextChanged(sender, e);

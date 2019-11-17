@@ -331,7 +331,7 @@ namespace medical_management_information_system
         /// <summary>
         /// 获取采购单
         /// </summary>
-        public string[] getPurchaseOrders(bool isComplete,bool isPurchaseDate)
+        public string[] getPurchaseOrders(bool isComplete, bool isPurchaseDate)
         {
             if (this.account!=null)
             {
@@ -345,16 +345,16 @@ namespace medical_management_information_system
                     {
                         sql="select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
                             "from `MediDB`.`PurchaseOrders` "+
-                            "where `isDelete` = '否' " +
-                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" " +
+                            "where `isDelete` = '否' "+
+                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" "+
                             "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc; ";
                     }
                     else
                     {
                         sql="select `MediDB`.`PurchaseOrders`.`completDate` "+
                             "from `MediDB`.`PurchaseOrders` "+
-                            "where `isDelete` = '否' " +
-                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" " +
+                            "where `isDelete` = '否' "+
+                            "and `MediDB`.`PurchaseOrders`.`isComplete`="+1+" "+
                             "order by `MediDB`.`PurchaseOrders`.`completDate` desc; ";
                     }
                 }
@@ -364,16 +364,16 @@ namespace medical_management_information_system
                     {
                         sql="select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
                         "from `MediDB`.`PurchaseOrders` "+
-                        "where `isDelete` = '否' " +
-                        "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" " +
+                        "where `isDelete` = '否' "+
+                        "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" "+
                         "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc; ";
                     }
                     else
                     {
                         sql="select `MediDB`.`PurchaseOrders`.`completDate` "+
                                "from `MediDB`.`PurchaseOrders` "+
-                               "where `isDelete` = '否' " +
-                               "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" " +
+                               "where `isDelete` = '否' "+
+                               "and `MediDB`.`PurchaseOrders`.`isComplete`="+0+" "+
                                "order by `MediDB`.`PurchaseOrders`.`completDate` desc; ";
                     }
                 }
@@ -502,7 +502,7 @@ namespace medical_management_information_system
         {
             this.account=null;
         }
-        
+
         /// <summary>
         /// 账号和员工之间的绑定
         /// </summary>
@@ -515,7 +515,7 @@ namespace medical_management_information_system
         /// <param name="addrs"></param>
         /// <param name="phones"></param>
         /// <returns></returns>
-        public string bindAccount(string name,string gender,string birthDay, string companyName,string branchName, string departmentName,List<string> addrs, List<string> phones)
+        public string bindAccount(string name, string gender, string birthDay, string companyName, string branchName, string departmentName, List<string> addrs, List<string> phones)
         {
             if (this.account!=null)
             {
@@ -523,16 +523,16 @@ namespace medical_management_information_system
                 MySqlCommand cmd;
                 MySqlDataReader rdr;
                 int departmentId = DButils.getDepartmentId(companyName, branchName, departmentName);
-                sql = "insert into `MediDB`.`Staff` " +
+                sql="insert into `MediDB`.`Staff` "+
                     "(`Department_id`,`name`,`gender`,`birthDay`)"+
-                    "values" +
+                    "values"+
                     "("+departmentId+", '"+name+"', '"+gender+"', '"+birthDay+"');";
-                cmd = new MySqlCommand(sql, this.connect);
+                cmd=new MySqlCommand(sql, this.connect);
                 cmd.ExecuteNonQuery();
 
                 sql="select LAST_INSERT_ID() as Staff_id;";
-                cmd = new MySqlCommand(sql, this.connect);
-                rdr = cmd.ExecuteReader();
+                cmd=new MySqlCommand(sql, this.connect);
+                rdr=cmd.ExecuteReader();
                 rdr.Read();
                 int staffId = int.Parse(rdr["Staff_id"].ToString());
                 rdr.Close();
@@ -602,7 +602,7 @@ namespace medical_management_information_system
                         "values "+
                         "("+staffId+","+phones[i]+"); ";
                 }
-                cmd = new MySqlCommand(sql, this.connect);
+                cmd=new MySqlCommand(sql, this.connect);
                 cmd.ExecuteNonQuery();
 
                 int departmentId = DButils.getDepartmentId(companyName, branchName, departmentName);
@@ -623,7 +623,27 @@ namespace medical_management_information_system
 
             return "null account";
         }
-        
+        public int addShoppingOrders(int clientId)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            sql="insert into `MediDB`.`ShoppingOrders` "+
+                "(`Staff_id`,`Client_id`,`shoppingDate`)"+
+                "values"+
+                "('"+this.getStaffId()+"','"+clientId+"',localtime());";
+            cmd=new MySqlCommand(sql, this.connect);
+            cmd.ExecuteNonQuery();
+
+            sql="select LAST_INSERT_ID() as ShoppingOrders_id;";
+            cmd=new MySqlCommand(sql, this.connect);
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int shoppingOrdersId = int.Parse(rdr["ShoppingOrders_id"].ToString());
+            rdr.Close();
+
+            return shoppingOrdersId;
+        }
 
         /// <summary>
         /// 断开连接
