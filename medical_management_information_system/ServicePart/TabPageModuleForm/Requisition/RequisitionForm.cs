@@ -56,6 +56,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
                 string[] temp = this.treeView.SelectedNode.Text.Split(' ');
                 int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
                 this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,false);
+                this.RequisitionForm_Load(sender, e);
             }
         }
 

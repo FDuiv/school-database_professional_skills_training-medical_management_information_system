@@ -230,6 +230,8 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm.Sh
                 float unitPrice=DButils.getDrugUnitPrice(int.Parse(this.shoppingDrugIds[i][0]));
                 DButils.addShoppingList(shoppingOrdersId,int.Parse(this.shoppingDrugIds[i][0]), int.Parse(this.shoppingDrugIds[i][1]), unitPrice);
             }
+            MessageBox.Show("录入成功！", "警告");
+            this.ShoppingForm_Load(sender,e);
         }
 
         private void rightDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

@@ -44,7 +44,6 @@
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(162, 21);
             this.passwordTextBox.TabIndex = 11;
-            this.passwordTextBox.Text = "ghghgghh";
             this.passwordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordTextBox_KeyDown);
             // 
             // accountTextBox
@@ -53,7 +52,6 @@
             this.accountTextBox.Name = "accountTextBox";
             this.accountTextBox.Size = new System.Drawing.Size(162, 21);
             this.accountTextBox.TabIndex = 10;
-            this.accountTextBox.Text = "FDuiv";
             this.accountTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.accountTextBox_KeyDown);
             // 
             // passwordLab

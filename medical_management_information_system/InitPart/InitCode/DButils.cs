@@ -693,6 +693,7 @@ namespace medical_management_information_system
             string sql = "select `MediDB`.`PurchaseOrders`.`purchaseDate` "+
                 "from `MediDB`.`PurchaseOrders` "+
                 "where `MediDB`.`PurchaseOrders`.`isComplete`=0 " +
+                "and `MediDB`.`PurchaseOrders`.`isDelete`='否' "+
                 "order by `MediDB`.`PurchaseOrders`.`purchaseDate` desc;";
             MySqlCommand cmd;
             MySqlDataReader rdr;
@@ -879,12 +880,89 @@ namespace medical_management_information_system
         {
             MySqlCommand cmd;
 
-            string sql = "insert into `MediDB`.`ShoppingList` " +
+            string sql = "insert into `MediDB`.`ShoppingList` "+
                 "(`ShoppingOrders_id`,`Drug_id`,`ShoppingNum`,`unitPrice`)"+
-                "values" +
+                "values"+
                 "("+shoppingOrdersId+","+drugId+","+shoppingNum+","+unitPrice+");";
             cmd=new MySqlCommand(sql, Program.user.getConnect());
             cmd.ExecuteNonQuery();
+        }
+        static public string[] getShoppingOrders()
+        {
+            List<string> requisitionOrders = new List<string>();
+            string sql = "select `MediDB`.`ShoppingOrders`.`shoppingDate` "+
+                "from `MediDB`.`ShoppingOrders` "+
+                "where `MediDB`.`ShoppingOrders`.`isDelete`='否' "+
+                "order by `MediDB`.`ShoppingOrders`.`shoppingDate` desc;";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                requisitionOrders.Add(rdr["shoppingDate"].ToString());
+            }
+            rdr.Close();
+            return requisitionOrders.ToArray();
+        }
+        static public int getShoppingOrdersId(string date)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;       
+            sql="select `MediDB`.`ShoppingOrders`.`ShoppingOrders_id` "+
+                "from `MediDB`.`ShoppingOrders` "+
+                "where `MediDB`.`ShoppingOrders`.`shoppingDate`='"+date+"';";      
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int shoppingOrdersId = int.Parse(rdr["ShoppingOrders_id"].ToString());
+            rdr.Close();
+            return shoppingOrdersId;
+        }
+        static public DataTable getShoppingList(int shoppingOrdersId)
+        {
+            string sql = "";
+            MySqlDataAdapter adapter;
+            DataTable newDataTable;
+            sql="select b.`name` as '药名', " +
+                "a.`ShoppingNum` as '购买数量' , "+
+                "a.`unitPrice` as '单价', " +
+                "a.`ShoppingNum`*a.`unitPrice` as '合计' "+
+                "from `MediDB`.`ShoppingList` as a, "+
+                "`MediDB`.`Drug` as b "+
+                "where a.`Drug_id`=b.`Drug_id` "+
+                "and a.`isDelete`='否' "+
+                "and a.`ShoppingOrders_id`="+shoppingOrdersId+";";
+           
+            adapter=new MySqlDataAdapter(sql, Program.user.getConnect());
+            newDataTable=new DataTable();
+            adapter.Fill(newDataTable);
+            return newDataTable;
+        }
+        static public string getShoppingOrdersName(string date)
+        {
+            string sql = "";
+            MySqlCommand cmd;
+            MySqlDataReader rdr;
+            sql="select `MediDB`.`ShoppingOrders`.`Client_id` "+
+                "from `MediDB`.`ShoppingOrders` "+
+                "where `MediDB`.`ShoppingOrders`.`shoppingDate`='"+date+"';";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            int clientId = int.Parse(rdr["Client_id"].ToString());
+            rdr.Close();
+
+            sql="select `MediDB`.`Client`.`name` "+
+                "from `MediDB`.`Client` "+
+                "where `MediDB`.`Client`.`Client_id`="+clientId+";";
+            cmd=new MySqlCommand(sql, Program.user.getConnect());
+            rdr=cmd.ExecuteReader();
+            rdr.Read();
+            string name = rdr["name"].ToString();
+            rdr.Close();
+            return name;
         }
     }
 }

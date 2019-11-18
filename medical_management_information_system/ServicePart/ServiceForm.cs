@@ -1,6 +1,7 @@
 ﻿
 using medical_management_information_system.ServicePart.TabPageModuleForm;
 using medical_management_information_system.ServicePart.TabPageModuleForm.Shopping;
+using medical_management_information_system.ServicePart.TabPageModuleForm.ShoppingCheck;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -118,6 +119,10 @@ namespace medical_management_information_system.ServicePart
                     ShoppingForm shoppingForm = new ShoppingForm();
                     this.autoSizeEvent+=shoppingForm.ShoppingForm_Load;
                     return shoppingForm;
+                case "购物单页表":
+                    ShoppingCheckForm shoppingCheckForm = new ShoppingCheckForm();
+                    this.autoSizeEvent+=shoppingCheckForm.ShoppingCheckForm_Load;
+                    return shoppingCheckForm;
             }
             return null;
         }

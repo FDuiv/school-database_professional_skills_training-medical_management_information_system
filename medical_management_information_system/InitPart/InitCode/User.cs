@@ -325,6 +325,7 @@ namespace medical_management_information_system
             jurisdictions["采购人员管理页表"]=(rdr["采购人员管理页表"].ToString()=="True");
             jurisdictions["经办人管理页表"]=(rdr["经办人管理页表"].ToString()=="True");
             jurisdictions["购物窗口页表"]=(rdr["购物窗口页表"].ToString()=="True");
+            jurisdictions["购物单页表"]=(rdr["购物单页表"].ToString()=="True");
             rdr.Close();
             return jurisdictions;
         }
