@@ -13,6 +13,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
 {
     public partial class RequisitionForm : Form
     {
+        private TreeNode selectedNode = null;
         public RequisitionForm()
         {
             InitializeComponent();
@@ -47,13 +48,14 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             string[] temp=this.treeView.SelectedNode.Text.Split(' ');
             int requisitionOrderId=DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
             this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,false);
+            this.selectedNode=this.treeView.SelectedNode;
         }
 
         private void flashBtn_Click(object sender, EventArgs e)
         {
-            if (this.treeView.SelectedNode!=null)
+            if (this.selectedNode!=null)
             {
-                string[] temp = this.treeView.SelectedNode.Text.Split(' ');
+                string[] temp = this.selectedNode.Text.Split(' ');
                 int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
                 this.dataGridView.DataSource=DButils.getPurchasingList(requisitionOrderId,false);
                 this.RequisitionForm_Load(sender, e);
@@ -66,7 +68,7 @@ namespace medical_management_information_system.ServicePart.TabPageModuleForm
             this.flashBtn_Click(sender, e);
             if (this.dataGridView.Rows.Count==1)
             {
-                string[] temp = this.treeView.SelectedNode.Text.Split(' ');
+                string[] temp = this.selectedNode.Text.Split(' ');
                 int requisitionOrderId = DButils.getRequisitionOrderId(temp[0]+" "+temp[2],true);
                 DButils.completePurchase(requisitionOrderId);
                 this.RequisitionForm_Load(sender, e);
